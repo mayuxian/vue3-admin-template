@@ -75,7 +75,7 @@ router、store、plugins、directive目录可直接创建文件，自动动态�
 - [x] 打开页面进度条显示
 - [x] 页面全屏
 - [x] 全局设置组件大小
-
+- [x] 表格通过el-height-adaptive-table指令实现高度自适应
 
 ## 安装(Installing)
 先安装项目依赖
