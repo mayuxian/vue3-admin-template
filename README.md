@@ -1,7 +1,11 @@
 # vue3-admin-template
 **此项目是集成vue3 +  vite + Element-Plus + Pinia + vue-router的后台管理系统的模板工程。**  
 >即开即用，提供初创团队或新项目专注于快速启动和开发交易。不再考虑脚手架编译打包和优化、ESLlint统一配置、项目和编码规范等问题。  
->参考、借鉴[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin/)项目。
+参考、借鉴[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin/)项目。
+
+**在打开vscode时根据提示安装上推荐插件。**  
+  
+  
 
 ## 内容(Content)
 -------------------------------------------
@@ -12,6 +16,12 @@
 解决了vite脚手架存在的一些问题。vite的默认打包配置已做优化。
 - **vue-router**  
 - **store存储 - pinia**
+- **配置推荐插件**
+  .vscode/extensions.json中配置了推荐插件，在打开vscode时根据提示安装上推荐插件即可。比如：
+  - vue-volar-extention-pack     -- vue3插件全家桶
+  - eamodio.gitlens      -- git记录查看工具
+  - gruntfuggly.todo-tree     --查看TODO事项 
+  - lihuiwang.vue-alias-skip   --别名路径可以点击快速跳转查看
 - **提供插件方式**
 router、store、plugins、directive目录可直接创建文件，自动动态引入加载。
 - **引入auto-import机制**
@@ -21,6 +31,8 @@ router、store、plugins、directive目录可直接创建文件，自动动态�
       区分dev调试环境、dev的build构建环境、test构建环境、生产构建环境。
 - **支持TypeScript开发**
   api接口的参数params建议都要定义参数对象属性和类型
+- **libs工具库**
+  提供了倒计时、数据检查器、加密器、存储器、类型检查器等
 
 ## 组件(Components)
 -------------------------------------------
@@ -37,10 +49,16 @@ router、store、plugins、directive目录可直接创建文件，自动动态�
    主要为了规范统一订单详情页字段的显示样式。
    编写订单详情页可参考```views/admin/user/Detail.vue```  
 
+- **新增编辑页组件**  
+   路径：components/DynForm/index.jsx  
+   可以实现编辑页面字段的增量更新，避免只修改一个字段更新全部字段的问题。  
+   规范统一订单详情页字段的显示样式。  
+   编写订单详情页可参考```？？``` 
+
 ## 规范文档
 -------------------
 项目和编码规范文档是致力于为初创企业、初创团队、新项目提供统一的规范，方便项目快速启动，团队协作，保障质量。
-[点击查看 前端项目和编码规范](http://fe-docs.mayuxian.cn/spec/project.html#%E9%A1%B9%E7%9B%AE%E5%90%8D%E5%91%BD%E5%90%8D)
+建议约定团队成员安装如下项目和编码规范开发[点击查看 前端项目和编码规范](http://fe-docs.mayuxian.cn/spec/project.html#%E9%A1%B9%E7%9B%AE%E5%90%8D%E5%91%BD%E5%90%8D)
 
 主要分享以下几方面：  
 - 前端统一标准规范  
