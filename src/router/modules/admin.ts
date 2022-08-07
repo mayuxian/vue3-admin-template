@@ -22,6 +22,16 @@ export default [
         component: () => import('@/views/admin/user/index.vue'),
       },
       {
+        path: 'detail',
+        name: 'adminDetail',
+        authKey: 'back_user_detail',
+        hidden: true,
+        meta: {
+          // title: '用户详情',
+        },
+        component: () => import('@/views/admin/user/Detail.vue'),
+      },
+      {
         path: 'role',
         name: 'roleManage',
         authKey: 'back_role_manage',

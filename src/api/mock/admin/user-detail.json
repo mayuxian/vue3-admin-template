@@ -1,0 +1,17 @@
+{
+  "code": 200,
+  "msg": "success",
+  "data": {
+    "id": "0000001",
+    "userId": "00000000000000001",
+    "username": "admin",
+    "nickname": "管理员",
+    "phone": "18612345678",
+    "sex": 1,
+    "age": 18,
+    "roles": "全权限,普通管理员",
+    "createTime": 1656934392000,
+    "updateTime": 1656934392000,
+    "state": 1
+  }
+}

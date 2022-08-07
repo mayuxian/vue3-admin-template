@@ -10,5 +10,5 @@ interface PermissionModel {
   id: number
   label: string
   authKey: string
-  childs?: Array<PermissionModel>
+  children?: Array<PermissionModel>
 }

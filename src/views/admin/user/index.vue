@@ -21,6 +21,13 @@
       <el-table-column label="操作" width="280" fixed="right">
         <template #default="scope">
           <el-button
+            v-if="permissionStore.getAuths.back_user_detail"
+            type="primary"
+            link
+            @click="onGoUserDetail(scope.row)"
+            >查看</el-button
+          >
+          <el-button
             v-if="permissionStore.getAuths.back_user_edit"
             type="primary"
             link
@@ -79,7 +86,7 @@ import UpsertUserDialog from './UpsertUserDialog.vue'
 import SetRoleDialog from './SetRoleDialog.vue'
 import { usePermissionStore } from '@/store/modules/permission'
 const permissionStore = usePermissionStore()
-
+const router = useRouter()
 const updateVisible = ref<boolean>(false)
 const roleDialogVisible = ref(false)
 const data = reactive({
@@ -102,6 +109,8 @@ const filterListOptions = ref({
 })
 
 //#region 事件
+//重点：建议使用function定义函数
+//因为箭头函数不存在变量提升，即定义时需要注意定义顺序，否则可能会造成调用时还未定义
 async function onUpdateStatus(row: any) {
   try {
     //启用，停用转换 //1：启用；0：停用
@@ -116,6 +125,14 @@ async function onUpdateStatus(row: any) {
   } catch (err: any) {
     ElMessage.error(err?.message)
   }
+}
+function onGoUserDetail(row: any) {
+  router.push({
+    name: 'adminDetail',
+    query: {
+      userid: row.id,
+    },
+  })
 }
 function onUpdateUser(row: any) {
   data.selectUserInfo = row

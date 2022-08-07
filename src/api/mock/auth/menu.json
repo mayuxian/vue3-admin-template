@@ -25,6 +25,12 @@
               "checked": true
             },
             {
+              "authKey": "back_user_detail",
+              "id": 112,
+              "label": "查看用户",
+              "checked": true
+            },
+            {
               "authKey": "back_user_edit",
               "id": 112,
               "label": "编辑用户",
@@ -111,6 +117,16 @@
               "checked": true
             }
           ]
+        },
+        {
+          "id": 14,
+          "label": "用户详情",
+          "authKey": "back_user_detail"
+        },
+        {
+          "id": 15,
+          "label": "权限配置",
+          "authKey": "back_auth_menu_manage"
         }
       ]
     }

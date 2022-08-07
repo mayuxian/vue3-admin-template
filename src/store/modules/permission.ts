@@ -80,8 +80,8 @@ function generateButtonAuth(data: any) {
       menu?.buttons?.forEach((btn: any) => {
         btnAuths[btn.authKey] = true
       })
-      if (menu.childs?.length) {
-        getButtonAuthLoop(menu.childs)
+      if (menu.children?.length) {
+        getButtonAuthLoop(menu.children)
       }
     })
   }
@@ -121,8 +121,8 @@ function matchRoutes(permList: Array<any>, appRoutes: Array<any>) {
       route.meta = route.meta || {}
       route.meta.title = perm.label
       let child = null
-      if (perm.childs) {
-        child = matchRoutes(perm.childs, appRoutes)
+      if (perm.children) {
+        child = matchRoutes(perm.children, appRoutes)
       }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { children, component, components, ...r } = route

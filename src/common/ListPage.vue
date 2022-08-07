@@ -52,7 +52,7 @@
           >
           </el-table-column>
         </template>
-        <slot name="appends" />
+        <slot name="table-columns" />
       </el-table>
       <Pagination
         class="page-pagination"
