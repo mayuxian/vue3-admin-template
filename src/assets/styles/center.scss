@@ -1,0 +1,63 @@
+.h-center {
+  text-align: center;
+}
+.v-center {
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.h-center-parent {
+  @extend .h-center;
+  &::after {
+    content: '';
+  }
+}
+
+.h-center-child {
+  display: inline-block;
+}
+// 伪元素方式,适配各浏览器
+.hv-center-parent {
+  @extend .h-center;
+  height: 100%;
+  &::after {
+    content: '';
+    @extend .v-center;
+  }
+}
+.hv-center-child {
+  @extend .v-center;
+  height: auto;
+}
+//想使用父:div,子:img 的方式则可使用以下方式,
+//若使用父:div,子:div->img方式,则可以使用.hv-center-parent 通用方式
+.img-hv-center-parent {
+  display: table;
+  width: 100%;
+}
+
+.img-hv-center-child {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.v-center-parent &::after {
+  content: '';
+  @extend .v-center;
+}
+
+.v-center-child {
+  @extend .v-center;
+}
+// ie7,ie8,ie9不兼容
+// .hv-center-flex-box {
+//     display: flex;
+//     justify-content:center;
+//     align-items: center;  //stretch盒子内的每个元素的高度都等于行高
+//     align-content: center;
+// }
+// .hv-center-flex-item{
+//   flex 1
+// }

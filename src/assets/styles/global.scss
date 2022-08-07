@@ -1,0 +1,22 @@
+// @import 'variables.scss';
+// @import 'mixin.scss';
+// @import 'element-plus.scss';
+
+@forward 'variables.scss';
+@forward 'mixin.scss';
+@forward 'element-plus.scss';
+
+.clamp {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  //   -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.cursor {
+  cursor: pointer;
+}
+.cursor_pointer {
+  cursor: pointer;
+}

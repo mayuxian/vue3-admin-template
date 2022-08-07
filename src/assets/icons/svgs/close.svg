@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <defs>
+        <filter x="-8.5%" y="-8.9%" width="117.0%" height="117.8%" filterUnits="objectBoundingBox" id="filter-1">
+            <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feMorphology radius="1" operator="erode" in="SourceAlpha" result="shadowInner"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowInner" result="shadowInner"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="shadowInner" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.05 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="XC_P02_首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="XC_P02_首页/XC_P02.2_首页_更多一级导航" transform="translate(-1288.000000, -1062.000000)" fill="#FFFFFF">
+            <g id="我的视频" transform="translate(372.000000, 812.000000)">
+                <g id="编组" transform="translate(0.000000, 124.000000)">
+                    <g id="视频" filter="url(#filter-1)" transform="translate(900.000000, 0.000000)">
+                        <g id="标签" transform="translate(8.000000, 120.000000)">
+                            <g id="图标/通用/删除_16_红色" transform="translate(8.000000, 6.000000)">
+                                <path d="M8,0 C12.418278,0 16,3.581722 16,8 C16,12.418278 12.418278,16 8,16 C3.581722,16 0,12.418278 0,8 C0,3.581722 3.581722,0 8,0 Z M4.84603764,4.14515711 C4.65249482,3.9516143 4.33869992,3.9516143 4.14515711,4.14515711 C3.9516143,4.33869992 3.9516143,4.65249482 4.14515711,4.84603764 L4.14515711,4.84603764 L7.29911947,8 L4.14515711,11.1539624 C3.9516143,11.3475052 3.9516143,11.6613001 4.14515711,11.8548429 C4.33869992,12.0483857 4.65249482,12.0483857 4.84603764,11.8548429 L4.84603764,11.8548429 L8,8.70088053 L11.1539624,11.8548429 C11.3475052,12.0483857 11.6613001,12.0483857 11.8548429,11.8548429 C12.0483857,11.6613001 12.0483857,11.3475052 11.8548429,11.1539624 L11.8548429,11.1539624 L8.70088053,8 L11.8548429,4.84603764 C12.0483857,4.65249482 12.0483857,4.33869992 11.8548429,4.14515711 C11.6613001,3.9516143 11.3475052,3.9516143 11.1539624,4.14515711 L11.1539624,4.14515711 L8,7.29911947 Z" id="形状结合"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

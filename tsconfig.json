@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "removeComments": true,
+    "noUnusedLocals": false,
+    "importHelpers": false, // 从 tslib 导入辅助工具函数（比如 __extends， __rest等）
+    "lib": ["esnext", "dom"],
+    "baseUrl": ".",
+    // "typeRoots": ["@types", "./types"],
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": ["element-plus/global"]
+    // "types": ["vite/client", "node"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.jsx",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "build/**/*.ts",
+    "build/**/*.d.ts",
+    "auto-import/*.d.ts",
+    "types/**/*.d.ts",
+    "types/*.d.ts",
+    "legacy.d.ts"
+  ]
+}

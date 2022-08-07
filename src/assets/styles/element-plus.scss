@@ -1,0 +1,70 @@
+//https://blog.csdn.net/ezconn/article/details/90052114
+//透明度 95%=FA   95%=F2  90%=E6 85%=D9 80%=CC  75%=BF 50%=80 25%=40  20%=33
+:root {
+  // --pc-theme-bg-color: #19b370;
+  // --pc-theme-hover-color: #19b370bf;
+  // --pc-theme-active-color: #19b37080;
+  // --pc-theme-disabled-color: #19b37040;
+
+  // --pc-theme-bg-color: #1890ffbf;
+  // --pc-theme-hover-color: #1890ff;
+  --pc-theme-bg-color: #1890ff;
+  --pc-theme-hover-color: #1890ffbf;
+  --pc-theme-active-color: #1890ff80;
+  --pc-theme-disabled-color: #1890ff40;
+}
+
+$theme-color: var(--pc-theme-bg-color);
+$theme-bg-color: var(--pc-theme-bg-color);
+$theme-border-color: var(--pc-theme-active-color);
+$theme-active-color: var(--pc-theme-active-color);
+$theme-hover-color: var(--pc-theme-hover-color);
+$theme-disabled-color: var(--pc-theme-disabled-color);
+// $theme-font-color: var(--pc-theme-color);
+
+//使用vue的id=app覆盖样式，有些样式无法彻底覆盖，所以使用:root
+:root {
+  --el-color-primary: #{$theme-color} !important;
+
+  //--el-button-hover-bg-color 和 --el-button-hover-border-color使用的值
+  // --el-color-primary-light-3: '';
+  --el-color-primary-light-3: #{$theme-hover-color} !important;
+
+  // --el-button-active-bg-color和 --el-button-active-border-color
+  // --el-color-primary-dark-2: '';
+  --el-color-primary-dark-2: #{$theme-active-color} !important;
+
+  // --el-button-disabled-bg-color 和 --el-button-disabled-border-color
+  --el-color-primary-light-5: #{$theme-disabled-color} !important;
+}
+
+//使用vue的id=app来重写主题
+#app {
+  --el-color-primary: #{$theme-color} !important;
+  // --el-button-text-color: var(--el-text-color-regular);
+  // --el-button-hover-text-color: var(--el-color-primary);
+  // --el-button-disabled-text-color: var(--el-text-color-placeholder);
+  // background-color: var(--el-button-bg-color,var(--el-fill-color-blank));
+  .el-button {
+    cursor: pointer;
+  }
+}
+
+.theme-full-color {
+  @extend .theme-bg-color;
+  @extend .theme-font-color;
+}
+
+.theme-bg-color {
+  background-color: #{$theme-color} !important;
+}
+
+.theme-font-color {
+  color: #{$theme-color} !important;
+}
+
+.el-pagination .btn-prev,
+.el-pagination .btn-next,
+.el-pager li {
+  background-color: transparent !important;
+}

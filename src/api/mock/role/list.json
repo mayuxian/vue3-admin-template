@@ -1,0 +1,29 @@
+{
+  "code": 200,
+  "msg": "success",
+  "data": {
+    "total": 3,
+    "list": [
+      {
+        "id": 3,
+        "name": "测试角色",
+        "isAdmin": false
+      },
+      {
+        "id": 2,
+        "name": "普通管理员",
+        "isAdmin": false
+      },
+      {
+        "id": 1,
+        "name": "全权限",
+        "isAdmin": true
+      }
+    ],
+    "pageNum": 0,
+    "pageSize": 10,
+    "pages": 1,
+    "size": 3,
+    "result": null
+  }
+}

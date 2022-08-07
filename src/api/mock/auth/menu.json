@@ -1,0 +1,118 @@
+{
+  "code": 200,
+  "msg": "success",
+  "data": [
+    {
+      "id": 0,
+      "label": "首页",
+      "authKey": "back_home",
+      "checked": true
+    },
+    {
+      "id": 1,
+      "label": "后台用户中心",
+      "authKey": "back_user_center",
+      "children": [
+        {
+          "id": 11,
+          "label": "用户管理",
+          "authKey": "back_user_manage",
+          "buttons": [
+            {
+              "authKey": "back_user_add",
+              "id": 111,
+              "label": "添加用户",
+              "checked": true
+            },
+            {
+              "authKey": "back_user_edit",
+              "id": 112,
+              "label": "编辑用户",
+              "checked": true
+            },
+            {
+              "authKey": "back_user_startstop",
+              "id": 113,
+              "label": "启停用户",
+              "checked": true
+            },
+            {
+              "authKey": "back_user_setRole",
+              "id": 114,
+              "label": "用户设置角色",
+              "checked": true
+            },
+            {
+              "authKey": "back_user_resetpwd",
+              "id": 115,
+              "label": "重置密码",
+              "checked": true
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "label": "角色管理",
+          "authKey": "back_role_manage",
+          "buttons": [
+            {
+              "authKey": "back_role_add",
+              "id": 121,
+              "label": "添加角色",
+              "checked": true
+            },
+            {
+              "authKey": "back_role_edit",
+              "id": 122,
+              "label": "编辑角色",
+              "checked": true
+            },
+            {
+              "authKey": "back_role_delete",
+              "id": 123,
+              "label": "删除角色",
+              "checked": true
+            },
+            {
+              "authKey": "back_role_setAuth",
+              "id": 124,
+              "label": "角色授权",
+              "checked": true
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "label": "权限管理",
+          "authKey": "back_auth_manage",
+          "buttons": [
+            {
+              "authKey": "back_auth_add",
+              "id": 131,
+              "label": "添加权限",
+              "checked": true
+            },
+            {
+              "authKey": "back_auth_edit",
+              "id": 132,
+              "label": "编辑权限",
+              "checked": true
+            },
+            {
+              "authKey": "back_auth_delete",
+              "id": 133,
+              "label": "删除权限",
+              "checked": true
+            },
+            {
+              "authKey": "back_auth_authorize",
+              "id": 134,
+              "label": "资源授权",
+              "checked": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

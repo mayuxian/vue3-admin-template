@@ -1,0 +1,17 @@
+{
+  "code": 200,
+  "msg": "success",
+  "data": {
+    "id": "1",
+    "userId": "00000001",
+    "nickname": "admin",
+    "phone": "18612345678",
+    "sex": 1,
+    "email": "xxxxxx@163.com",
+    "github": "https://github.com/mayuxian/vue3-admin-template",
+    "createTime": 1656750164000,
+    "updateTime": 1656750164000,
+    "lastLoginTime": 1656750164000,
+    "isDeleted": 0
+  }
+}

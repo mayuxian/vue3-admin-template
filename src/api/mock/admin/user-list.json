@@ -1,0 +1,134 @@
+{
+  "code": 200,
+  "msg": "success",
+  "data": {
+    "total": 12,
+    "list": [
+      {
+        "id": "0000001",
+        "userId": "00000000000000001",
+        "username": "zhangsan",
+        "nickname": "张三",
+        "phone": "18612345670",
+        "sex": 1,
+        "roles": "全权限,普通管理员",
+        "createTime": 1656934392000,
+        "updateTime": 1656934392000,
+        "state": 1
+      },
+      {
+        "id": "000002",
+        "userId": "00000000000000002",
+        "username": "lisi",
+        "nickname": "李四",
+        "phone": "18612345671",
+        "sex": 1,
+        "roles": "普通管理员",
+        "createTime": 1656913522000,
+        "updateTime": 1657073533000,
+        "state": 1
+      },
+      {
+        "id": "000003",
+        "userId": "00000000000000003",
+        "username": "wangwu",
+        "nickname": "王五",
+        "phone": "18612345672",
+        "sex": 1,
+        "roles": "普通管理员",
+        "createTime": 1656754965000,
+        "updateTime": 1656754965000,
+        "state": 1
+      },
+      {
+        "id": "000003",
+        "userId": "00000000000000003",
+        "username": "wangwu",
+        "nickname": "王五",
+        "phone": "18612345672",
+        "sex": 1,
+        "roles": "普通管理员",
+        "createTime": 1656754965000,
+        "updateTime": 1656754965000,
+        "state": 1
+      },
+      {
+        "id": "000003",
+        "userId": "00000000000000003",
+        "username": "wangwu",
+        "nickname": "王五",
+        "phone": "18612345672",
+        "sex": 1,
+        "roles": "普通管理员",
+        "createTime": 1656754965000,
+        "updateTime": 1656754965000,
+        "state": 1
+      },
+      {
+        "id": "000003",
+        "userId": "00000000000000003",
+        "username": "wangwu",
+        "nickname": "王五",
+        "phone": "18612345672",
+        "sex": 1,
+        "roles": "普通管理员",
+        "createTime": 1656754965000,
+        "updateTime": 1656754965000,
+        "state": 1
+      },
+      {
+        "id": "000003",
+        "userId": "00000000000000003",
+        "username": "wangwu",
+        "nickname": "王五",
+        "phone": "18612345672",
+        "sex": 1,
+        "roles": "普通管理员",
+        "createTime": 1656754965000,
+        "updateTime": 1656754965000,
+        "state": 1
+      },
+      {
+        "id": "000003",
+        "userId": "00000000000000003",
+        "username": "wangwu",
+        "nickname": "王五",
+        "phone": "18612345672",
+        "sex": 1,
+        "roles": "普通管理员",
+        "createTime": 1656754965000,
+        "updateTime": 1656754965000,
+        "state": 1
+      },
+      {
+        "id": "000003",
+        "userId": "00000000000000003",
+        "username": "wangwu",
+        "nickname": "王五",
+        "phone": "18612345672",
+        "sex": 1,
+        "roles": "普通管理员",
+        "createTime": 1656754965000,
+        "updateTime": 1656754965000,
+        "state": 1
+      },
+      {
+        "id": "000003",
+        "userId": "00000000000000003",
+        "username": "wangwu",
+        "nickname": "王五",
+        "phone": "18612345672",
+        "sex": 1,
+        "roles": "普通管理员",
+        "createTime": 1656754965000,
+        "updateTime": 1656754965000,
+        "state": 1
+      }
+    ],
+    "pageNum": 0,
+    "pageSize": 10,
+    "pages": 2,
+    "size": 10,
+    "result": null
+  }
+}

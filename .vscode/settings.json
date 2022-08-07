@@ -1,0 +1,72 @@
+{
+  "window.zoomLevel": 0,
+  // "editor.wordWrap": "wordWrapColumn",
+  "editor.formatOnSave": true, //true 保存时格式化
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": false //true 保存时自动修复
+  },
+  "eslint.format.enable": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "html",
+    "vue-html",
+    "vue" //设置vue表示使用eslint检查vue
+  ],
+  "files.associations": {
+    "*.vue": "vue"
+    // "*.ts": "typescript"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // "editor.defaultFormatter": "Vue.volar"
+    // "editor.codeActionsOnSave": {
+    //   "source.fixAll.eslint": true,
+    //   "source.fixAll.stylelint": true
+    // }
+  },
+  "volar.tsPlugin": true,
+  "volar.tsPluginStatus": false,
+  "[typescript]": {
+    // "editor.defaultFormatter": "johnsoncodehk.vscode-typescript-vue-plugin"
+    // "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[less]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": false,
+  "javascript.format.insertSpaceAfterConstructor": true,
+
+  "vetur.format.enable": false, //禁用vetur格式化器
+  // "vetur.validation.template": false,
+
+  // Use ':' as separator between property and value
+  // "languageStylus.useSeparator": true, // default value
+  // Toggle matches for Stylus Builtin Functions on autocomplete
+  // "languageStylus.useBuiltinFunctions": true, // default value
+  // Toggle colors preview
+  "editor.colorDecorators": true // default value
+}

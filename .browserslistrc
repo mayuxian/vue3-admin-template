@@ -1,0 +1,11 @@
+# 注释表示标记各浏览器版本
+# Android 4.1
+# iOS 7.1
+# Chrome > 31
+# ff > 31
+# ie >= 8
+
+> 1%
+# 表示最新的两个版本 
+last 2 versions
+not dead
