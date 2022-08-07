@@ -7,30 +7,30 @@
   
 
 ## 内容(Content)
-包含以下内容：
-- **权限管理模块**
+包含以下内容：  
+- **权限管理模块**  
 定义后台人员、角色、角色权限三个模块和mock数据。
-- **vite脚手架**  
+- **vite脚手架**    
 解决了vite脚手架存在的一些问题。vite的默认打包配置已做优化。
-- **vue-router**  
-- **store存储 - pinia**
-- **配置推荐插件**
-  .vscode/extensions.json中配置了推荐插件，在打开vscode时根据提示安装上推荐插件即可。比如：
-  - vue-volar-extention-pack     -- vue3插件全家桶
-  - eamodio.gitlens      -- git记录查看工具
-  - gruntfuggly.todo-tree     --查看TODO事项 
-  - lihuiwang.vue-alias-skip   --别名路径可以点击快速跳转查看
-- **提供插件方式**
-router、store、plugins、directive目录可直接创建文件，自动动态引入加载。
-- **引入auto-import机制**
-  引入unplugin-auto-import/vite插件，可自动引入加载组件和vue、vue-router的API  
-- **ESLint + Prettier配置**  
-- **区分环境变量与配置**  
-      区分dev调试环境、dev的build构建环境、test构建环境、生产构建环境。
-- **支持TypeScript开发**
-  api接口的参数params建议都要定义参数对象属性和类型
-- **libs工具库**
-  提供了倒计时、数据检查器、加密器、存储器、类型检查器等
+- **vue-router**    
+- **store存储 - pinia**  
+- **配置推荐插件**    
+  .vscode/extensions.json中配置了推荐插件，在打开vscode时根据提示安装上推荐插件即可。比如：  
+  - vue-volar-extention-pack     -- vue3插件全家桶  
+  - eamodio.gitlens      -- git记录查看工具  
+  - gruntfuggly.todo-tree     --查看TODO事项   
+  - lihuiwang.vue-alias-skip   --别名路径可以点击快速跳转查看  
+- **提供插件方式**  
+router、store、plugins、directive目录可直接创建文件，自动动态引入加载。  
+- **引入auto-import机制**  
+  引入unplugin-auto-import/vite插件，可自动引入加载组件和vue、vue-router的API    
+- **ESLint + Prettier配置**    
+- **区分环境变量与配置**    
+   区分dev调试环境、dev的build构建环境、test构建环境、生产构建环境。  
+- **支持TypeScript开发**    
+  api接口的参数params建议都要定义参数对象属性和类型  
+- **libs工具库**  
+  提供了倒计时、数据检查器、加密器、存储器、类型检查器等  
 
 ## 组件(Components)
 - **具有SvgIcon组件**  
