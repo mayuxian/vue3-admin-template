@@ -4,7 +4,7 @@
 参考、借鉴[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin/)项目。
 
 **在打开vscode时根据提示安装上推荐插件。**  
-![首页](./docs/home.jpg)
+![首页](/docs/home.jpg)
   
 
 ## 内容(Content)
