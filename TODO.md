@@ -4,3 +4,4 @@
       切换大小为small后，输入框clearable和获取焦点存在问题  
 - [ ] 更换yarn为pnpm 
 - [ ] 编译可以使用DynForm组件的新增编辑表单页面的demo页面
+- [ ] 可切换主题颜色
