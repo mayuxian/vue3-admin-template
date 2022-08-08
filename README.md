@@ -4,7 +4,8 @@
 参考、借鉴[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin/)项目。
 
 **在打开vscode时根据提示安装上推荐插件。**  
-![首页](/docs/home.jpg)
+![首页](docs/home.jpg)
+![首页](https://github.com/mayuxian/vue3-admin-template/tree/main/docs/home.jpg)
   
 
 ## 内容(Content)
@@ -115,4 +116,4 @@ TODO:有待补充哔哩哔哩视频。
 **MIT**
 
 可参考阮一峰老师的开源协议说明
-![开源协议](./docs/protocol.jpg)
+![开源协议](https://github.com/mayuxian/vue3-admin-template/tree/main/docs/protocol.jpg)
