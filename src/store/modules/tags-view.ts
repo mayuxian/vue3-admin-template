@@ -26,7 +26,10 @@ export const useTagsViewStore = defineStore({
     addVisitedView(view: any) {
       if (this.visitedViews.some(v => v.path === view.path)) return
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { matched, ...viewData } = view
+      const { redirectedFrom, matched, ...viewData } = view
+      // console.log('viewData 1', viewData)
+      // console.log('viewData 2', toRaw(viewData))
+      // console.log('viewData 3', unref(viewData))
       this.visitedViews.push(
         Object.assign({}, viewData, {
           title:
@@ -104,7 +107,7 @@ export const useTagsViewStore = defineStore({
       for (let v of this.visitedViews) {
         if (v.path === view.path) {
           // eslint-disable-next-line no-unused-vars
-          const { matched, ...viewData } = view
+          const { redirectedFrom, matched, ...viewData } = view
           v = Object.assign(v, viewData)
           break
         }

@@ -138,7 +138,6 @@ function initTags() {
   }
 }
 function addTags() {
-  // if (route.name) {
   if (route.meta.title) {
     tagsViewStore.addView(route)
   }

@@ -13,15 +13,10 @@ export const useUserStore = defineStore({
     getToken: (state: UserState): string => {
       return state.token
     },
-    getUserId: (state: UserState): string | undefined => state.userInfo?.userId,
     hasLogged: (state: UserState): boolean => !!state.token,
     //TODO:需要获取用户信息后使用此逻辑 !!state.token && !!state.userInfo?.userId,
     getUserInfo: (state: UserState): UserInfo | null => {
       return state.userInfo as UserInfo
-    },
-    hasIdentity: (state: UserState): boolean | null => {
-      if (!state.userInfo) return null //未获取用户信息
-      return (state.userInfo as UserInfo)?.identitySave === 1
     },
   },
   actions: {
@@ -29,14 +24,13 @@ export const useUserStore = defineStore({
       await loginApi.logout()
       this.removeToken()
       this.setUserInfo()
-      window.location.reload()
+      // window.location.reload()
     },
     setToken(data: string) {
       this.token = data
     },
     removeToken() {
       this.token = ''
-      this.userInfo = null
     },
     setUserInfo(data?: object) {
       if (!data) {

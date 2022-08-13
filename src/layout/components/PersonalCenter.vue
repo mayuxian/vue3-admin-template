@@ -40,15 +40,14 @@ const menuList = reactive([
   { title: '退出', name: 'exit', link: '/login', divided: true },
 ])
 
-const routerChange = (menu: any) => {
+const routerChange = async (menu: any) => {
   if (menu.name === 'exit') {
-    logout(menu.link)
-    return
+    await logout()
   }
   router.push({ path: menu.link })
 }
 
-const logout = async (url: string) => {
+const logout = async () => {
   try {
     await userStore.logout()
   } catch (err: any) {
