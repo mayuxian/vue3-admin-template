@@ -1,14 +1,20 @@
 <template>
-  <div
-    :key="props.slotKey"
-    class="infoitem-box"
-    :style="Object.assign({ width: `${props.width}` }, $attrs)"
-  >
-    <div class="infoitem-label" :style="labelStyle">{{ label }} </div>
-    <slot v-if="$slots.default"></slot>
-    <slot v-else-if="$slots[props.slotKey]" :name="props.slotKey"></slot>
+  <div :key="props.slotKey" class="infoitem-box" v-bind="$attrs">
+    <div
+      class="infoitem-label"
+      :style="`width:${props.labelWidth};${props.labelStyle}`"
+      >{{ label }}
+    </div>
+    <slot v-if="$slots.default" :style="`min-width:${props.textWidth}`"></slot>
+    <slot
+      v-else-if="$slots[props.slotKey]"
+      :name="props.slotKey"
+      :style="`min-width:${props.textWidth}`"
+    ></slot>
     <template v-else>
-      <div :class="`infoitem-text ${props.textClass || ''}`" :style="textStyle"
+      <div
+        :class="`infoitem-text ${props.textClass}`"
+        :style="`min-width:${props.textWidth};${props.textStyle}`"
         >{{ text }}
       </div>
     </template>
@@ -16,7 +22,6 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue'
 const props = defineProps({
   slotKey: {
     type: String || Number,
@@ -30,13 +35,17 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  width: {
+  labelWidth: {
     type: String,
-    default: '300px',
+    default: '160px',
   },
   labelStyle: {
     type: String,
     default: '',
+  },
+  textWidth: {
+    type: String,
+    default: '500px',
   },
   textStyle: {
     type: String,
@@ -51,29 +60,35 @@ const label = computed(() => props.label)
 const text = computed(() => props.text)
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .infoitem-box {
-  display: inline-block;
+  // display: inline-block;
   margin-right: 24px;
   text-align: left;
-  vertical-align: middle;
+  vertical-align: top;
+  // display: flex;
+  // justify-content: start;
 }
 .infoitem-label {
-  height: 20px;
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
   font-size: 14px;
   font-weight: 400;
   color: #999999;
-  line-height: 20px;
   letter-spacing: 1px;
   margin: 8px 0;
   text-align: left;
+  vertical-align: middle;
 }
 .infoitem-text {
-  width: 100%;
-  height: 36px;
+  min-height: 36px;
   line-height: 36px;
   background: #fafafa;
   border-radius: 4px;
+  text-align: left;
+  display: inline-block;
+  vertical-align: middle;
 
   font-size: 14px;
   font-weight: 400;
@@ -81,5 +96,12 @@ const text = computed(() => props.text)
   margin: 8px 0;
   padding-left: 10px;
   text-align: left;
+
+  :deep(.el-image) {
+    vertical-align: middle;
+  }
+  :deep(img) {
+    vertical-align: middle;
+  }
 }
 </style>

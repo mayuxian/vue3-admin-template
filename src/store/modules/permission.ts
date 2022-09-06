@@ -1,7 +1,9 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-const STORE_KEY = import.meta.env.VITE_APP_NAME + '-PERMISSION'
+import { APP_NAME } from '@/define/constants'
 import permApi from '@/api/permission'
 import { allRoutes } from '@/router/index'
+
+const STORE_KEY = APP_NAME + '-PERMISSION'
 
 export const usePermissionStore = defineStore({
   id: STORE_KEY,

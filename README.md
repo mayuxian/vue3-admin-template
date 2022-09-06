@@ -4,7 +4,6 @@
 参考、借鉴[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin/)项目。
 
 **在打开vscode时根据提示安装上推荐插件。**   
-[在线预览代码](https://github1s.com/mayuxian/vue3-admin-template)
 [在线预览页面](http://vue3-admin-template.mayuxian.cn/)
 ![首页](https://resource.mayuxian.cn/images/vue3-admin-template-home.jpg)
 
@@ -50,6 +49,8 @@ router、store、plugins、directive目录可直接创建文件，自动动态�
   api接口的参数params建议都要定义参数对象属性和类型  
 - **libs工具库**  
   提供了倒计时、数据检查器、加密器、存储器、类型检查器等  
+- **提供主题颜色替换**
+  
 
 ## 组件(Components)
 - **具有SvgIcon组件**  
@@ -100,7 +101,10 @@ Using yarn:
 $ yarn  install  
 ```
 ## 运行(Running)
-查看package.json中的script即可查看到dev和不同环境的build脚本命令
+
+1. 通过Todo tree插件或者搜索//TODO:来查找需要替换代码
+
+2. 查看package.json中的script即可查看到dev和不同环境的build脚本命令
 
 dev调试模式
 ``` javascript

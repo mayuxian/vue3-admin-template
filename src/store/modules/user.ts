@@ -1,7 +1,10 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-const STORE_KEY = import.meta.env.VITE_APP_NAME + '-USER'
+import { APP_NAME } from '@/define/constants'
 import store from '../index'
 import loginApi from '@/api/login'
+
+const STORE_KEY = APP_NAME + '-USER'
+
 export const useUserStore = defineStore({
   id: STORE_KEY,
   state: (): UserState => ({

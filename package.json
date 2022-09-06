@@ -8,7 +8,8 @@
     "build:test": "vite build --mode test",
     "build:prod": "vite build --mode production",
     "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix src/"
+    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix src/",
+    "svgo": "svgo -f src/assets/icons/svgs --config=src/assets/icons/svgo.yml"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^1.0.1",

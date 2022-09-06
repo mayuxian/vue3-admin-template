@@ -1,5 +1,5 @@
 <template>
-  <div id="tags-view-container" class="tags-view-container">
+  <div ref="tagsViewRef" id="tags-view-container" class="tags-view-container">
     <scroll-pane
       ref="scrollPane"
       class="tags-view-wrapper"
@@ -57,6 +57,7 @@ const permStore = usePermissionStore()
 const route = useRoute()
 const router = useRouter()
 const scrollPane = ref()
+const tagsViewRef = ref()
 const data = reactive({
   visible: false,
   top: 0,
@@ -199,8 +200,9 @@ function toLastView(visitedViews: any, view: any) {
 }
 function openMenu(tag: any, e: any) {
   const menuMinWidth = 105
-  const offsetLeft = inst?.ctx?.$el.getBoundingClientRect().left // container margin left
-  const offsetWidth = inst?.ctx?.$el.offsetWidth // container width
+  const el = inst?.ctx?.$el || unref(tagsViewRef)
+  const offsetLeft = el?.getBoundingClientRect()?.left // container margin left
+  const offsetWidth = el?.offsetWidth // container width
   const maxLeft = offsetWidth - menuMinWidth // left boundary
   const left = e.clientX - offsetLeft + 15 // 15: margin right
 

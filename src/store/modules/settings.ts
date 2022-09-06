@@ -1,5 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-const STORE_KEY = import.meta.env.VITE_APP_NAME + '-SETTINGS'
+import { APP_NAME } from '@/define/constants'
+const STORE_KEY = APP_NAME + '-SETTINGS'
 
 export const useSettingsStore = defineStore({
   id: STORE_KEY,

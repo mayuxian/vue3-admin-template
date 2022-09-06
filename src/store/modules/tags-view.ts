@@ -1,5 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-const STORE_KEY = import.meta.env.VITE_APP_NAME + '-TAGSVIEW'
+import { APP_NAME } from '@/define/constants'
+const STORE_KEY = APP_NAME + '-TAGSVIEW'
 interface TagsView {
   visitedViews: any[]
   cachedViews: any[]
