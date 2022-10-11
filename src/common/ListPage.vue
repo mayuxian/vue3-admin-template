@@ -28,7 +28,8 @@
         border
         default-expand-all
         :max-height="tableHeightCalc"
-        v-el-height-adaptive-table
+         v-el-height-adaptive-table
+         v-bind="props.tableOptions"
       >
         <el-table-column
           type="index"
@@ -46,13 +47,18 @@
             :label="col.label"
             :width="col.width"
             :default-sort="col.defaultSort"
-            :show-overflow-tooltip="col.showTooltip"
+            :show-overflow-tooltip="
+              col.showTooltip ||
+              col.showOverflowTooltip ||
+              col['show-overflow-tooltip']
+            "
             :min-width="col.minWidth || col.width"
             :formatter="col.formatter"
           >
           </el-table-column>
         </template>
         <slot name="table-columns" />
+        <slot name="columns-append" />
       </el-table>
       <Pagination
         class="page-pagination"
@@ -67,7 +73,6 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue'
 const props = defineProps({
   request: {
     type: [Function],
@@ -84,6 +89,10 @@ const props = defineProps({
   tableColumns: {
     type: Array,
     default: () => null,
+  },
+  tableOptions: {
+    type: Object,
+    default: null,
   },
 })
 const createParamsRaw = () => ({
