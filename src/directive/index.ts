@@ -4,8 +4,8 @@ let directiveConfig: any = []
 Object.keys(modules).forEach(key => {
   if (key === './index.ts') return
   const module = modules[key].default
-  if (module.install) {
-    directiveConfig = directiveConfig.concat(modules[key].default)
+  if (module?.install) {
+    directiveConfig = directiveConfig.concat(module)
   }
 })
 
