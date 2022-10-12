@@ -2,8 +2,9 @@ import { ElMessage } from 'element-plus'
 export default {
   install: (app: any, options: object) => {
     app.config.errorHandler = (err: any, vm: any, info: any) => {
-      console.error('vue errorHandler -> err', err)
-      console.error('vue errorHandler -> info', info)
+      console.error('vue errorHandler -> message', err.message)
+      console.error('vue errorHandler -> stack', err.stack)
+      //console.error('vue errorHandler -> info', info)
       //dev开发阶段就报错未trycatch捕捉的错误，比如dom绑定错误导致白屏报错问题
       ElMessage.error(err?.message)
     }
