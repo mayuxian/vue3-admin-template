@@ -68,3 +68,6 @@ $theme-disabled-color: var(--pc-theme-disabled-color);
 .el-pager li {
   background-color: transparent !important;
 }
+.el-button.is-link:focus {
+  color: var(--el-button-text-color);
+}
