@@ -6,6 +6,7 @@ export default [
     meta: {
       title: '登录',
       noCheck: true,
+	  noHistory: true,
     },
   },
 ]
