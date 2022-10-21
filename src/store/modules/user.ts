@@ -52,6 +52,9 @@ export const useUserStore = defineStore({
       const userRes = await loginApi.getUserInfo()
       this.setUserInfo(userRes?.data)
     },
+	setHistory(history: string) {
+      this.preHistory = history
+    },
   },
   persist: {
     enabled: true,

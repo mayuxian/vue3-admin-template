@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
   NProgress.start()
   const userStore = useUserStore()
   if (!to.meta.noHistory) {
-    userStore.setUserInfo({ preHistory: to.fullPath })
+    userStore.setHistory(to.fullPath)
   }
   if (!to.meta.noCheck && !userStore.hasLogged && to.path !== '/login') {
     //需要登录，检查是否已登录
