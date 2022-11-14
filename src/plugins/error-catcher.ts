@@ -9,7 +9,7 @@ export default {
       ElMessage.error(err?.message)
     }
     app.config.warnHandler = function (msg: any, vm: any, trace: any) {
-      // console.warn('vue warnHandler -> msg', msg)
+      console.warn('vue warnHandler -> msg', msg)
       // console.warn('vue warnHandler -> trace', trace)
       // `trace` is the component hierarchy trace
     }
@@ -22,17 +22,26 @@ export default {
     ) {
       //   console.error('window.onerror -> event', event)
       //   console.error('window.onerror -> source', source)
-      //   console.error('window.onerror -> error', error)
+      console.error('window.onerror -> error', error)
       //   ElMessage.error(error?.message)
     }
     window.addEventListener(
       'error',
       function (event: any) {
-        // const errMsg = `资源${event.srcElement?.currentSrc || ''}加载失败`
-        // console.error('window.addEventListener -> error ', errMsg)
+        console.error('window.addEventListener -> event ', event)
+        const errMsg = `资源${event.srcElement?.currentSrc || ''}加载失败`
+        console.error('window.addEventListener -> error ', errMsg)
         // ElMessage.error(errMsg)
       },
       true
+    )
+    window.addEventListener(
+      'window.addEventListener -> unhandledrejection',
+      function (event: any) {
+        console.error(`unhandledrejection: ${event.reason}`) //获取到catch的err的原因(内容) 与控制台报错一致
+        console.error(`unhandledrejection: ${event.promise}`) //获取到未处理的promise对象
+        event.preventDefault()
+      }
     )
   },
 }
