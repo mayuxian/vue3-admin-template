@@ -6,7 +6,7 @@ export default {
       console.error('vue errorHandler -> stack:', err.stack)
       //console.error('vue errorHandler -> info', info)
       //dev开发阶段就报错未trycatch捕捉的错误，比如dom绑定错误导致白屏报错问题
-      // ElMessage.error(err?.message)
+      ElMessage.error(err?.message)
     }
     app.config.warnHandler = function (msg: any, vm: any, trace: any) {
       console.warn('vue warnHandler -> msg', msg)

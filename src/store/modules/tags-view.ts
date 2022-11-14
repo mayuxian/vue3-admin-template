@@ -38,8 +38,8 @@ export const useTagsViewStore = defineStore({
             view.params.title ||
             view.query.titile ||
             'no-name',
-          query: view.query,
-          params: view.params,
+          query: view.query || {},
+          params: view.params || {},
         })
       )
     },

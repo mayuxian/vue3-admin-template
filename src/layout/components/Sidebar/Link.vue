@@ -1,5 +1,5 @@
 <template>
-  <component :is="type" v-bind="linkProps(to)">
+  <component :is="type" v-bind="linkProps(to)" :key="to.path">
     <slot />
   </component>
 </template>
@@ -29,8 +29,8 @@ export default defineComponent({
         }
       }
       return {
+        to: { path: to, query: {}, params: {} },
         // to: to,
-        to: { path: to },
       }
     }
     return { type, linkProps }

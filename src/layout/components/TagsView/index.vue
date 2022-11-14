@@ -10,7 +10,11 @@
         :ref="setItemRef"
         :key="tag.path"
         :class="isActive(tag) ? 'active' : ''"
-        :to="{ path: tag.path, query: tag.query, params: tag.params }"
+        :to="{
+          path: tag.path,
+          query: tag.query || {},
+          params: tag.params || {},
+        }"
         class="tags-view-item"
         @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
         @contextmenu.prevent="openMenu(tag, $event)"
