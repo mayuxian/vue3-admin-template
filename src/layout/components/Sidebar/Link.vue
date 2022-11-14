@@ -29,7 +29,7 @@ export default defineComponent({
         }
       }
       return {
-        to: { path: to, query: {}, params: {} },
+        to: { path: to },
         // to: to,
       }
     }

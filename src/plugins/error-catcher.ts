@@ -41,6 +41,7 @@ export default {
         console.error(`unhandledrejection: ${event.reason}`) //获取到catch的err的原因(内容) 与控制台报错一致
         console.error(`unhandledrejection: ${event.promise}`) //获取到未处理的promise对象
         event.preventDefault()
+        ElMessage.error(event.reason)
       }
     )
   },
