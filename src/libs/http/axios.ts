@@ -84,7 +84,7 @@ export default http
 function obj2Params(params: any) {
   if (!params || Array.isArray(params)) return params
   const reqParams: any = {}
-  Object.keys(params).forEach((key: any) => {
+  Object.keys(params || {}).forEach((key: any) => {
     const val = params[key]
     if (val === 0 || val) {
       reqParams[key] = val

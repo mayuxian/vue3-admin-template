@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router'
 const modules = import.meta.globEager('./modules/**/*.ts')
 const routes: Array<RouteRecordRaw> = []
-Object.keys(modules).forEach(key => {
+Object.keys(modules || {}).forEach(key => {
   const route = modules[key].default
   if (route) {
     if (Array.isArray(route)) {

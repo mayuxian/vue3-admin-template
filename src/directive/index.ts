@@ -1,7 +1,7 @@
 const modules = import.meta.globEager('./**/*.[t|j]s')
 
 let directiveConfig: any = []
-Object.keys(modules).forEach(key => {
+Object.keys(modules || {}).forEach(key => {
   if (key === './index.ts') return
   const module = modules[key].default
   if (module?.install) {

@@ -17,15 +17,11 @@
       >
         {{ tag.title }}
         <el-icon
+          v-if="!isAffix(tag)"
           class="el-icon-close"
           @click.prevent.stop="closeSelectedTag(tag)"
           ><Close
         /></el-icon>
-        <!-- <span
-          v-if="!isAffix(tag)"
-          class="el-icon-close"
-          @click.prevent.stop="closeSelectedTag(tag)"
-        /> -->
       </router-link>
     </scroll-pane>
     <ul
@@ -50,7 +46,7 @@ import { getCurrentInstance } from 'vue'
 import { useTagsViewStore } from '@/store/modules/tags-view'
 import { usePermissionStore } from '@/store/modules/permission'
 import ScrollPane from './ScrollPane.vue'
-import path from 'path'
+import path from 'path-browserify'
 const inst: any = getCurrentInstance()
 const tagsViewStore = useTagsViewStore()
 const permStore = usePermissionStore()

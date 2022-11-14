@@ -1,6 +1,6 @@
 const modules = import.meta.globEager('./*.ts')
 const plugins: any = []
-Object.keys(modules).forEach(key => {
+Object.keys(modules || {}).forEach(key => {
   const plugin = modules[key].default
   if (key !== 'index.ts' && plugin) {
     if (Array.isArray(plugin)) {

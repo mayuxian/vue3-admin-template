@@ -82,7 +82,7 @@ router、store、plugins、directive目录可直接创建文件，自动动态�
 
 ## 安装(Installing)
 先安装项目依赖
-
+# 安装时确保是管理员身份运行vscode，path-browserify安装时可能需要管理员权限。
 Using npm:
 
 ```bash
