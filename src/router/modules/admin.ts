@@ -6,7 +6,6 @@ export default [
     component: Layout,
     authKey: 'back_user_center',
     meta: {
-      // title: '用户中心',
       icon: 'component',
     },
     redirect: '/admin/user',
@@ -16,7 +15,6 @@ export default [
         name: 'adminUser',
         authKey: 'back_user_manage',
         meta: {
-          // title: '用户管理',
           icon: 'user',
         },
         component: () => import('@/views/admin/user/index.vue'),
@@ -26,9 +24,7 @@ export default [
         name: 'adminDetail',
         authKey: 'back_user_detail',
         hidden: true,
-        meta: {
-          // title: '用户详情',
-        },
+        meta: {},
         component: () => import('@/views/admin/user/Detail.vue'),
       },
       {
@@ -36,7 +32,6 @@ export default [
         name: 'roleManage',
         authKey: 'back_role_manage',
         meta: {
-          // title: '角色管理',
           icon: 'peoples',
         },
         component: () => import('@/views/admin/role/index.vue'),
@@ -46,7 +41,6 @@ export default [
         name: 'authManage',
         authKey: 'back_auth_manage',
         meta: {
-          // title: '权限管理',
           icon: 'lock',
         },
         component: () => import('@/views/admin/auth/index.vue'),

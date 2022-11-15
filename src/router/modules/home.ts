@@ -6,7 +6,7 @@ export default [
     component: Layout,
     redirect: '/dashboard',
     authKey: 'back_home',
-    meta: { title: '首页', icon: 'dashboard', affix: true },
+    meta: { title: '首页', icon: 'dashboard' },
     children: [
       {
         path: 'dashboard',

@@ -1,23 +1,16 @@
 <template>
   <section class="app-main">
-    <!-- 缓冲 -->
     <router-view v-slot="{ Component, route }">
       <transition
-        :key="route"
         name="fade-transform"
         mode="out-in"
-        :css="!route.meta.noAppear"
-        :appear="!route.meta.noAppear"
+        :css="!route.meta.noFade"
+        :appear="!route.meta.noFade"
       >
-        <keep-alive v-if="route.meta.keepalive">
-          <div :key="route.name">
-            <component :is="Component"></component>
-          </div>
-        </keep-alive>
-        <!-- 无缓冲 -->
-        <div v-else :key="route.name">
-          <component :is="Component"></component>
-        </div>
+        <KeepAlive v-if="!route.meta.noCache" :exclude="['ListPage']">
+          <component :key="route.fullPath" :is="Component"></component>
+        </KeepAlive>
+        <component v-else :key="route.fullPath" :is="Component"></component>
       </transition>
     </router-view>
     <el-backtop :right="100" :bottom="280" />

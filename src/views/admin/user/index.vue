@@ -1,82 +1,84 @@
 <template>
-  <ListPage
-    :request="request"
-    :table-columns="tableColumns"
-    :filter-fields="filterFields"
-    :filter-list-options="filterListOptions"
-  >
-    <template #query-right>
-      <el-button type="primary" @click="onAddUser">添加用户</el-button>
-    </template>
-    <template #table-columns>
-      <el-table-column label="状态" width="80">
-        <template #default="scope">
-          <el-tag
-            :type="scope.row.state === 1 ? 'success' : 'danger'"
-            disable-transitions
-            >{{ ['启用', '停用'].at(scope.row.state) }}
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="280" fixed="right">
-        <template #default="scope">
-          <el-button
-            v-if="permissionStore.getAuths.back_user_detail"
-            type="primary"
-            link
-            @click="onGoUserDetail(scope.row)"
-            >查看</el-button
-          >
-          <el-button
-            v-if="permissionStore.getAuths.back_user_edit"
-            type="primary"
-            link
-            @click="onUpdateUser(scope.row)"
-            >编辑</el-button
-          >
-          <el-button
-            v-if="permissionStore.getAuths.back_user_setRole"
-            type="primary"
-            link
-            @click="onSetRole(scope.row)"
-            >角色设置</el-button
-          >
-          <el-popconfirm
-            v-if="permissionStore.getAuths.back_user_startstop"
-            :title="`此操作将重置该用户密码为123456，是否继续?`"
-            @confirm="onResetPwd(scope.row)"
-          >
-            <template #reference>
-              <el-button type="primary" link>重置密码</el-button>
-            </template>
-          </el-popconfirm>
-          <el-popconfirm
-            v-if="permissionStore.getAuths.back_user_startstop"
-            confirm-button-text="确定"
-            cancel-button-text="取消"
-            :title="`你确定要${scope.row.state === 0 ? '启用' : '停用'}吗?`"
-            @confirm="onUpdateStatus(scope.row)"
-          >
-            <template #reference>
-              <el-button type="primary" link>{{
-                scope.row.state === 0 ? '启用' : '停用'
-              }}</el-button>
-            </template>
-          </el-popconfirm>
-        </template>
-      </el-table-column>
-    </template>
-  </ListPage>
-  <UpsertUserDialog
-    v-model:user-info="data.selectUserInfo"
-    v-model:visible="updateVisible"
-    @submit="onReload"
-  ></UpsertUserDialog>
-  <SetRoleDialog
-    v-model:visible="roleDialogVisible"
-    :data="data.selectUserInfo"
-    @submit="bindInit"
-  />
+  <div>
+    <ListPage
+      :request="request"
+      :table-columns="tableColumns"
+      :filter-fields="filterFields"
+      :filter-list-options="filterListOptions"
+    >
+      <template #query-right>
+        <el-button type="primary" @click="onAddUser">添加用户</el-button>
+      </template>
+      <template #table-columns>
+        <el-table-column label="状态" width="80">
+          <template #default="scope">
+            <el-tag
+              :type="scope.row.state === 1 ? 'success' : 'danger'"
+              disable-transitions
+              >{{ ['启用', '停用'].at(scope.row.state) }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="280" fixed="right">
+          <template #default="scope">
+            <el-button
+              v-if="permissionStore.getAuths.back_user_detail"
+              type="primary"
+              link
+              @click="onGoUserDetail(scope.row)"
+              >查看</el-button
+            >
+            <el-button
+              v-if="permissionStore.getAuths.back_user_edit"
+              type="primary"
+              link
+              @click="onUpdateUser(scope.row)"
+              >编辑</el-button
+            >
+            <el-button
+              v-if="permissionStore.getAuths.back_user_setRole"
+              type="primary"
+              link
+              @click="onSetRole(scope.row)"
+              >角色设置</el-button
+            >
+            <el-popconfirm
+              v-if="permissionStore.getAuths.back_user_startstop"
+              :title="`此操作将重置该用户密码为123456，是否继续?`"
+              @confirm="onResetPwd(scope.row)"
+            >
+              <template #reference>
+                <el-button type="primary" link>重置密码</el-button>
+              </template>
+            </el-popconfirm>
+            <el-popconfirm
+              v-if="permissionStore.getAuths.back_user_startstop"
+              confirm-button-text="确定"
+              cancel-button-text="取消"
+              :title="`你确定要${scope.row.state === 0 ? '启用' : '停用'}吗?`"
+              @confirm="onUpdateStatus(scope.row)"
+            >
+              <template #reference>
+                <el-button type="primary" link>{{
+                  scope.row.state === 0 ? '启用' : '停用'
+                }}</el-button>
+              </template>
+            </el-popconfirm>
+          </template>
+        </el-table-column>
+      </template>
+    </ListPage>
+    <UpsertUserDialog
+      v-model:user-info="data.selectUserInfo"
+      v-model:visible="updateVisible"
+      @submit="onReload"
+    ></UpsertUserDialog>
+    <SetRoleDialog
+      v-model:visible="roleDialogVisible"
+      :data="data.selectUserInfo"
+      @submit="bindInit"
+    />
+  </div>
 </template>
 
 <script lang="ts" setup>

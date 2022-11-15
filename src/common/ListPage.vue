@@ -14,8 +14,9 @@
       :style="`position: relative; float: right;${
         filterFields?.length ? 'top: -42px;' : 'top: -22px;'
       };`"
-      ><slot name="query-right"
-    /></div>
+    >
+      <slot name="query-right" />
+    </div>
     <div
       :style="`position: relative;${
         filterFields?.length ? 'top: -25px;' : 'top: -5px;'
@@ -28,8 +29,8 @@
         border
         default-expand-all
         :max-height="tableHeightCalc"
-         v-el-height-adaptive-table
-         v-bind="props.tableOptions"
+        v-el-height-adaptive-table
+        v-bind="props.tableOptions"
       >
         <el-table-column
           type="index"
@@ -87,7 +88,7 @@ const props = defineProps({
     default: null,
   },
   tableColumns: {
-    type: Array,
+    type: Array<any>,
     default: () => null,
   },
   tableOptions: {
@@ -127,7 +128,12 @@ async function init() {
   }
 }
 init()
-
+onMounted(() => {
+  console.log('ListPage onMounted')
+})
+onActivated(() => {
+  console.log('ListPage onActivated')
+})
 //#region 事件
 function onQuery(params: any) {
   data.filterParams = createParamsRaw()

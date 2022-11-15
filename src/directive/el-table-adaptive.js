@@ -13,9 +13,9 @@ const doResize = (el, binding, vnode) => {
   const tableHeight = el.offsetHeight
   const { value } = binding
 
-  if (!tableHeight) {
-    throw new Error(`el-$table must set the height. Such as height='100px'`)
-  }
+  // if (!tableHeight) {
+  //   throw new Error(`el-$table must set the height. Such as height='100px'`)
+  // }
   const bottomOffset = (value && value.bottomOffset) || 60
 
   // if (!$table) return
