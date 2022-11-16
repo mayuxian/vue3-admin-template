@@ -43,7 +43,7 @@
     "@vue/eslint-config-prettier": "^7.0.0",
     "autoprefixer": "^10.4.4",
     "consola": "^2.15.3",
-    "eslint": "^8.11.0",
+    "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.5.0",
