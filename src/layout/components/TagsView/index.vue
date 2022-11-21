@@ -33,7 +33,7 @@
       :style="{ left: data.left + 'px', top: data.top + 'px' }"
       class="contextmenu"
     >
-      <li @click="refreshSelectedTag(data.selectedTag)">刷新</li>
+      <!-- <li @click="refreshSelectedTag(data.selectedTag)">刷新</li> -->
       <li
         v-if="!isAffix(data.selectedTag)"
         @click="closeSelectedTag(data.selectedTag)"
