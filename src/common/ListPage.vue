@@ -76,6 +76,7 @@
 
 <script lang="ts" setup>
 import { useResizeObserver, useThrottleFn } from '@vueuse/core'
+import screenfull from 'screenfull'
 const props = defineProps({
   request: {
     type: [Function],
@@ -169,25 +170,32 @@ defineExpose({
 
 //#region 表格高度自适应
 const tableMaxHeight = ref(window.screen.height - 330)
-function doResize() {
-  const el: any = document.getElementById('ListPage-id')
+const throttledFn = useThrottleFn(() => {
+  const el: any = document.getElementById('pagetable-id')
   if (!el) return
-  const height = window.innerHeight - el.getBoundingClientRect().top - 50
+  let height = window.innerHeight - el.getBoundingClientRect().top - 50
+  if (screenfull.isFullscreen) {
+    height -= 50
+  }
   tableMaxHeight.value = height
+}, 0)
+
+function doResize() {
+  throttledFn()
 }
 onBeforeMount(() => {
-  const throttledFn = useThrottleFn(() => {
-    doResize()
-  }, 600)
-  useResizeObserver(window.document.body, () => {
-    throttledFn()
-  })
+  screenfull.on('change', doResize)
+  window.addEventListener('resize', doResize)
 })
 onMounted(() => {
   doResize()
 })
 onUpdated(() => {
   doResize()
+})
+onUnmounted(() => {
+  screenfull.off('change', doResize)
+  window.removeEventListener('resize', doResize)
 })
 //#endregion
 </script>

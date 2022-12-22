@@ -22,9 +22,13 @@ const doResize = (el, binding, vnode) => {
   const height =
     window.innerHeight - el.getBoundingClientRect().top - bottomOffset
   if (!tableHeight || height === tableHeight) return
-  el.style.height = height + 'px'
-  // $table.layout.setHeight(height)
-  // $table.doLayout()
+    // el.style.height = height + 'px'
+  // el.style.maxHeight = height + 'px'
+  const ctx = vnode?.ref?.i?.ctx
+  if (ctx) {
+    // ctx.layout && ctx.layout.setMaxHeight && ctx.layout?.setMaxHeight(height)
+    // ctx.doLayout && ctx.doLayout()
+  }
 }
 
 const adaptive = {
