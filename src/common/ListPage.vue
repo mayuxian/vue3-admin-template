@@ -22,14 +22,15 @@
         filterFields?.length ? 'top: -25px;' : 'top: -5px;'
       };`"
     >
+      <!-- v-el-height-adaptive-table有待完善 -->
       <el-table
+        id="ListPage-id"
         v-loading="tableLoading"
         :data="data.tableData"
         stripe
         border
         default-expand-all
-        :max-height="tableHeightCalc"
-        v-el-height-adaptive-table
+        :max-height="tableMaxHeight"
         v-bind="props.tableOptions"
       >
         <el-table-column
@@ -74,6 +75,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useResizeObserver, useThrottleFn } from '@vueuse/core'
 const props = defineProps({
   request: {
     type: [Function],
@@ -160,9 +162,32 @@ function onSkipSize(size = 10) {
 function loadIndex(index: number) {
   return pager?.size * (pager.current - 1) + index + 1
 }
-const tableHeightCalc = ref(window.screen.height - 160)
 defineExpose({
   init,
+})
+//#endregion
+
+//#region 表格高度自适应
+const tableMaxHeight = ref(window.screen.height - 330)
+function doResize() {
+  const el: any = document.getElementById('ListPage-id')
+  if (!el) return
+  const height = window.innerHeight - el.getBoundingClientRect().top - 50
+  tableMaxHeight.value = height
+}
+onBeforeMount(() => {
+  const throttledFn = useThrottleFn(() => {
+    doResize()
+  }, 600)
+  useResizeObserver(window.document.body, () => {
+    throttledFn()
+  })
+})
+onMounted(() => {
+  doResize()
+})
+onUpdated(() => {
+  doResize()
 })
 //#endregion
 </script>

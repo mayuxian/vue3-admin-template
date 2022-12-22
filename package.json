@@ -16,7 +16,7 @@
     "@sentry/integrations": "^6.19.7",
     "@sentry/tracing": "^6.19.7",
     "@sentry/vue": "^6.19.7",
-    "@vueuse/core": "^8.5.0",
+    "@vueuse/core": "^9.8.2",
     "axios": "^0.26.1",
     "dayjs": "^1.11.0",
     "element-plus": "^2.2.11",
