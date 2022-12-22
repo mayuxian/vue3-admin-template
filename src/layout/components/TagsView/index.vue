@@ -8,7 +8,7 @@
       <router-link
         v-for="tag in visitedViews"
         :ref="setItemRef"
-        :key="tag.path"
+        :key="tag.name || tag.path"
         :class="isActive(tag) ? 'active' : ''"
         :to="{
           path: tag.path,
@@ -103,7 +103,7 @@ function setItemRef(el: any) {
   }
 }
 function isActive(curRoute: any) {
-  return curRoute.path === route.path
+  return curRoute.name === route.name || curRoute.path === route.path
 }
 function isAffix(tag: any) {
   return tag.meta && tag.meta.affix

@@ -25,7 +25,12 @@ export const useTagsViewStore = defineStore({
       this.addCachedView(view)
     },
     addVisitedView(view: any) {
-      if (this.visitedViews.some(v => v.path === view.path)) return
+      if (
+        this.visitedViews.some(
+          v => v.name === view.name || v.path === view.path
+        )
+      )
+        return
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { redirectedFrom, matched, ...viewData } = view
       // console.log('viewData 1', viewData)
