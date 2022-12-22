@@ -1,17 +1,10 @@
 <template>
   <section class="app-main">
     <router-view v-slot="{ Component, route }">
-      <transition
-        name="fade-transform"
-        mode="out-in"
-        :css="!route.meta.noFade"
-        :appear="!route.meta.noFade"
-      >
-        <KeepAlive v-if="!route.meta.noCache" :exclude="['ListPage']">
-          <component :key="route.fullPath" :is="Component"></component>
-        </KeepAlive>
-        <component v-else :key="route.fullPath" :is="Component"></component>
-      </transition>
+      <KeepAlive v-if="!route.meta.noCache" :exclude="['ListPage']">
+        <component :key="route.fullPath" :is="Component"></component>
+      </KeepAlive>
+      <component v-else :key="route.fullPath" :is="Component"></component>
     </router-view>
     <el-backtop :right="100" :bottom="280" />
   </section>
