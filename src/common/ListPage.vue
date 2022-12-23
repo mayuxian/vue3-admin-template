@@ -174,9 +174,9 @@ const throttledFn = useThrottleFn(() => {
   const el: any = document.getElementById('pagetable-id')
   if (!el) return
   let height = window.innerHeight - el.getBoundingClientRect().top - 50
-  if (screenfull.isFullscreen) {
-    height -= 50
-  }
+  // if (screenfull.isFullscreen) {
+  //   height -= 50
+  // }
   tableMaxHeight.value = height
 }, 0)
 
