@@ -5,6 +5,11 @@ interface TagsView {
   visitedViews: any[]
   cachedViews: any[]
 }
+function matchRoute(routeItem: any, curRoute: any) {
+  return curRoute.meta?.divide
+    ? routeItem.fullPath === curRoute.fullPath
+    : routeItem.name === curRoute.name || routeItem.path === curRoute.path
+}
 export const useTagsViewStore = defineStore({
   id: STORE_KEY,
   state: (): TagsView => ({
@@ -25,26 +30,24 @@ export const useTagsViewStore = defineStore({
       this.addCachedView(view)
     },
     addVisitedView(view: any) {
+      if (view.meta?.subpage) return //匹配路由>=3个属于二级子页面，则不需要tag
       if (
-        this.visitedViews.some(
-          v => v.name === view.name || v.path === view.path
-        )
-      )
+        this.visitedViews.some((v: any) => {
+          return matchRoute(v, view)
+        })
+      ) {
         return
+      }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { redirectedFrom, matched, ...viewData } = view
-      // console.log('viewData 1', viewData)
-      // console.log('viewData 2', toRaw(viewData))
-      // console.log('viewData 3', unref(viewData))
+      const title =
+        view.meta.title || view.params.title || view.query.titile || 'no-name'
+      const divideTitle = `${title}-${view.query.name || view.params.name}`
       this.visitedViews.push(
         Object.assign({}, viewData, {
-          title:
-            view.meta.title ||
-            view.params.title ||
-            view.query.titile ||
-            'no-name',
-          query: view.query || {},
-          params: view.params || {},
+          title: view.meta?.divide ? divideTitle : title,
+          // query: view.query || {},
+          // params: view.params || {},
         })
       )
     },
@@ -61,19 +64,16 @@ export const useTagsViewStore = defineStore({
     },
     delVisitedView(view: any) {
       for (const [i, v] of this.visitedViews.entries()) {
-        if (v.path === view.path) {
+        if (matchRoute(v, view)) {
           this.visitedViews.splice(i, 1)
           break
         }
       }
     },
     delCachedView(view: any) {
-      for (const [i, v] of this.visitedViews.entries()) {
-        if (v.path === view.path) {
-          this.visitedViews.splice(i, 1)
-          break
-        }
-      }
+      const viewName = view.meta.cacheName || view.name
+      const index = this.cachedViews.indexOf(viewName)
+      index > -1 && this.cachedViews.splice(index, 1)
     },
 
     delOthersViews(view: any) {
@@ -82,7 +82,7 @@ export const useTagsViewStore = defineStore({
     },
     delOthersVisitedViews(view: any) {
       this.visitedViews = this.visitedViews.filter((v: any) => {
-        return v.meta.affix || v.path === view.path
+        return v.meta.affix || matchRoute(v, view)
       })
     },
     delOthersCachedViews(view: any) {
@@ -103,7 +103,7 @@ export const useTagsViewStore = defineStore({
     delAllVisitedViews() {
       // keep affix tags
       const affixTags = this.visitedViews.filter(tag => tag.meta.affix)
-      this.visitedViews = affixTags
+      this.visitedViews = affixTags || []
     },
     delAllCachedViews() {
       this.cachedViews = []
@@ -111,8 +111,8 @@ export const useTagsViewStore = defineStore({
 
     updateVisitedView(view: any) {
       for (let v of this.visitedViews) {
-        if (v.path === view.path) {
-          // eslint-disable-next-line no-unused-vars
+        if (matchRoute(v, view)) {
+          // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
           const { redirectedFrom, matched, ...viewData } = view
           v = Object.assign(v, viewData)
           break

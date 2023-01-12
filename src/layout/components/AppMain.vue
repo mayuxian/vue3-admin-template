@@ -1,10 +1,14 @@
 <template>
   <section class="app-main">
     <router-view v-slot="{ Component, route }">
-      <KeepAlive v-if="!route.meta.noCache" :exclude="['ListPage']">
+      <KeepAlive v-if="!route.meta.noCache">
         <component :key="route.fullPath" :is="Component"></component>
       </KeepAlive>
-      <component v-else :key="route.fullPath" :is="Component"></component>
+      <component
+        v-if="route.meta.noCache"
+        :key="route.fullPath"
+        :is="Component"
+      ></component>
     </router-view>
     <el-backtop :right="100" :bottom="280" />
   </section>
@@ -14,6 +18,9 @@
 import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'AppMain',
+  setup() {
+    console.log('AppMain.vue setup')
+  },
 })
 </script>
 
