@@ -69,7 +69,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="authManage">
 import { filterFields, tableColumns } from './config'
 import authApi from '@/api/auth'
 import { usePermissionStore } from '@/store/modules/permission'

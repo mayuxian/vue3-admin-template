@@ -8,9 +8,7 @@
       :label="item.label"
       style="margin-right: 24px"
       width="336px"
-      :text="
-        item.formatter ? item.formatter(data[item.key], data) : data[item.key]
-      "
+      :text="item.formatter ? item.formatter(data[item.key]) : data[item.key]"
     >
       <template #state>
         <span>自定义state字段slot, 值：{{ data.state }}</span>
@@ -19,7 +17,7 @@
     <br />
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" name="adminDetail">
 import userApi from '@/api/admin-user'
 import { detailConfig } from './detail.config'
 const route = useRoute()

@@ -83,7 +83,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="roleManage">
 import { filterFields, tableColumns } from './config'
 import roleApi from '@/api/role'
 import { usePermissionStore } from '@/store/modules/permission'

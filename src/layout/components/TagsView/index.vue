@@ -1,6 +1,6 @@
 <template>
   <div ref="tagsViewRef" id="tags-view-container" class="tags-view-container">
-    <scroll-pane
+    <ScrollPane
       ref="scrollPane"
       class="tags-view-wrapper"
       @scroll="handleScroll"
@@ -8,10 +8,10 @@
       <router-link
         v-for="tag in visitedViews"
         :ref="setItemRef"
-        :key="tag.name || tag.path"
+        :key="tag.fullPath"
         :class="isActive(tag) ? 'active' : ''"
         :to="{
-          path: tag.path,
+          path: tag.fullPath,
           query: tag.query || {},
           params: tag.params || {},
         }"
@@ -19,7 +19,14 @@
         @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
         @contextmenu.prevent="openMenu(tag, $event)"
       >
-        {{ tag.title }}
+        <el-tooltip
+          effect="dark"
+          :content="tag.title"
+          placement="top"
+          :show-after="1000"
+        >
+          <div class="tags-view-title">{{ tag.title }}</div>
+        </el-tooltip>
         <el-icon
           v-if="!isAffix(tag)"
           class="el-icon-close"
@@ -27,7 +34,7 @@
           ><Close
         /></el-icon>
       </router-link>
-    </scroll-pane>
+    </ScrollPane>
     <ul
       v-show="data.visible"
       :style="{ left: data.left + 'px', top: data.top + 'px' }"
@@ -50,7 +57,8 @@ import { getCurrentInstance } from 'vue'
 import { useTagsViewStore } from '@/store/modules/tags-view'
 import { usePermissionStore } from '@/store/modules/permission'
 import ScrollPane from './ScrollPane.vue'
-import path from 'path-browserify'
+// import path from 'path-browserify'
+import { ElMessage, ElMessageBox } from 'element-plus'
 const inst: any = getCurrentInstance()
 const tagsViewStore = useTagsViewStore()
 const permStore = usePermissionStore()
@@ -70,7 +78,7 @@ defineExpose({
   tagRefs: data.tagRefs,
 })
 const visitedViews = computed(() => tagsViewStore.visitedViews)
-
+let curProjectId: any = null
 watch(
   () => route.path,
   () => {
@@ -102,8 +110,24 @@ function setItemRef(el: any) {
     data.tagRefs.push(el)
   }
 }
+function matchRoute(curRoute: any) {
+  return curRoute.meta.divide
+    ? curRoute.fullPath === route.fullPath
+    : curRoute.name === route.name || curRoute.path === route.path
+}
 function isActive(curRoute: any) {
-  return curRoute.name === route.name || curRoute.path === route.path
+  console.log('------begin--------')
+  console.log('curRoute ', curRoute)
+  console.log('route ', route)
+  let isActive = matchRoute(curRoute)
+  if (route.meta.subpage) {
+    console.log('projectId', curProjectId)
+    isActive =
+      route.path.startsWith(curRoute.path) && curProjectId == curRoute.query.id
+  }
+  console.log('isActive', isActive)
+  console.log('------end--------')
+  return isActive
 }
 function isAffix(tag: any) {
   return tag.meta && tag.meta.affix
@@ -112,13 +136,21 @@ function filterAffixTags(routes: any, basePath = '/'): [] {
   let tags: any = []
   routes.forEach((route: any) => {
     if (route.meta && route.meta.affix) {
-      const tagPath = path.resolve(basePath, route.path)
+      // const tagPath = path.resolve(basePath, route.path)
       tags.push({
-        fullPath: tagPath,
-        path: tagPath,
+        fullPath: route.fullPath,
+        path: route.path,
         name: route.name,
-        meta: { ...route.meta },
+        meta: route.meta,
+        params: route.params,
+        query: route.query,
       })
+      // tags.push({
+      //   fullPath: tagPath,
+      //   path: tagPath,
+      //   name: route.name,
+      //   meta: { ...route.meta },
+      // })
     }
     if (route.children) {
       const tempTags = filterAffixTags(route.children, route.path)
@@ -146,18 +178,24 @@ function addTags() {
 function moveToCurrentTag() {
   nextTick(() => {
     for (const tag of data.tagRefs) {
-      if (tag.to.path === route.path) {
+      console.log('moveToCurrentTag tag ', tag)
+      console.log('moveToCurrentTag route', route)
+      if (tag.to.path === route.fullPath) {
+        if (route.meta.alone) {
+          curProjectId = route.query.id //复制当前移动的项目的id
+        }
         scrollPane.value?.moveToTarget(tag)
         // when query is different then update
-        if (tag.to.fullPath !== route.fullPath) {
-          tagsViewStore.updateVisitedView(route)
-        }
+        // if (tag.to.fullPath !== route.fullPath) {
+        tagsViewStore.updateVisitedView(route)
+        // }
         break
       }
     }
   })
 }
 function refreshSelectedTag(view: any) {
+  //TODO:需要支持右键刷新
   tagsViewStore.delCachedView(view)
   nextTick(() => {
     router.replace({
@@ -165,7 +203,18 @@ function refreshSelectedTag(view: any) {
     })
   })
 }
-function closeSelectedTag(view: any) {
+async function closeSelectedTag(view: any) {
+  if (view.meta.closeConfirm) {
+    await ElMessageBox.confirm(
+      '请确认当前页面内容是否保存，否则会导致内容丢失，是否确认离开？',
+      '提示',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    )
+  }
   tagsViewStore.delView(view)
   if (isActive(view)) {
     toLastView(tagsViewStore.getVisitedViews, view)
@@ -227,6 +276,14 @@ function handleScroll() {
 
 <style lang="scss" scoped>
 .tags-view-wrapper {
+  .tags-view-title {
+    max-width: 90px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    vertical-align: middle;
+  }
   .tags-view-item {
     .el-icon-close {
       width: 16px;

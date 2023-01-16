@@ -1,26 +1,30 @@
 <template>
   <section class="app-main">
     <router-view v-slot="{ Component, route }">
-      <KeepAlive v-if="!route.meta.noCache">
+      <KeepAlive :include="cachedViews">
+        <component :is="Component"></component>
+      </KeepAlive>
+      <!-- <KeepAlive v-if="!route.meta.noCache">
         <component :key="route.fullPath" :is="Component"></component>
       </KeepAlive>
       <component
         v-if="route.meta.noCache"
         :key="route.fullPath"
         :is="Component"
-      ></component>
+      ></component> -->
     </router-view>
     <el-backtop :right="100" :bottom="280" />
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
-  name: 'AppMain',
-  setup() {
-    console.log('AppMain.vue setup')
-  },
+<script lang="ts" setup>
+import { useTagsViewStore } from '@/store/modules/tags-view'
+const tagsViewStore = useTagsViewStore()
+
+const cachedViews = computed(() => {
+  const cacheViews = tagsViewStore.getCachedViews
+  console.log('>>> cacheViews ', cacheViews)
+  return cacheViews
 })
 </script>
 

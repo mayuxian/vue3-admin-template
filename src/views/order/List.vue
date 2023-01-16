@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="orderList">
 import { ref, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 

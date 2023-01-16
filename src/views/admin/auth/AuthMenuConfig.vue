@@ -30,7 +30,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="authMenuConfig">
 import authApi from '@/api/auth'
 const route = useRoute()
 

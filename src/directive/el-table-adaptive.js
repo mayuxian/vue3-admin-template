@@ -22,7 +22,7 @@ const doResize = (el, binding, vnode) => {
   const height =
     window.innerHeight - el.getBoundingClientRect().top - bottomOffset
   if (!tableHeight || height === tableHeight) return
-    // el.style.height = height + 'px'
+  // el.style.height = height + 'px'
   // el.style.maxHeight = height + 'px'
   const ctx = vnode?.ref?.i?.ctx
   if (ctx) {

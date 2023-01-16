@@ -1,7 +1,7 @@
 import { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-// import vueSetupExtend from 'vite-plugin-vue-setup-extend'
+import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 
 import svgIconsPlugin from './svg-icon.plugin'
 import AutoImportPlugin from './auto-import.plugin'
@@ -15,7 +15,7 @@ const vitePlugins: (PluginOption | PluginOption[])[] = [
   vueJsx(),
   svgLoader(),
   // support name
-  // vueSetupExtend(),
+  vueSetupExtend(),
   AutoImportPlugin,
   svgIconsPlugin,
   // legacy(),

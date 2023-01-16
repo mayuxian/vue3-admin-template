@@ -81,7 +81,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="adminUser">
 import { filterFields, tableColumns } from './config'
 import adminApi from '@/api/admin-user'
 import UpsertUserDialog from './UpsertUserDialog.vue'
