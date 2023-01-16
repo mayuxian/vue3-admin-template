@@ -1,30 +1,21 @@
 <template>
   <div class="page-box">
     <HeaderQuerier
+      v-if="props.filterFields?.length || $slots['query-right']"
       v-model="data.filterParams"
-      :field-options="filterFields"
-      :list-options="filterListOptions"
+      :field-options="props.filterFields"
+      :list-options="props.filterListOptions"
       @query="onQuery"
       @reset="onReset"
-      style="`position: relative; top: 5px"
     >
       <slot name="query" />
+      <template #query-right>
+        <slot name="query-right" />
+      </template>
     </HeaderQuerier>
-    <div
-      :style="`position: relative; float: right;${
-        filterFields?.length ? 'top: -42px;' : 'top: -22px;'
-      };`"
-    >
-      <slot name="query-right" />
-    </div>
-    <div
-      :style="`position: relative;${
-        filterFields?.length ? 'top: -25px;' : 'top: -5px;'
-      };`"
-    >
-      <!-- v-el-height-adaptive-table有待完善 -->
+    <div>
       <el-table
-        id="ListPage-id"
+        id="listpage_id"
         v-loading="tableLoading"
         :data="data.tableData"
         stripe
@@ -171,7 +162,7 @@ defineExpose({
 //#region 表格高度自适应
 const tableMaxHeight = ref(window.screen.height - 330)
 const throttledFn = useThrottleFn(() => {
-  const el: any = document.getElementById('pagetable-id')
+  const el: any = document.getElementById('listpage_id')
   if (!el) return
   let height = window.innerHeight - el.getBoundingClientRect().top - 50
   // if (screenfull.isFullscreen) {

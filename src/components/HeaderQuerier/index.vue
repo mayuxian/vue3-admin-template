@@ -1,17 +1,25 @@
 <template>
-  <multi-filter
-    ref="multiFilter"
-    v-model="filterParams"
-    :field-options="fieldOptions"
-    :list-options="listOptions"
-    :label-visible="true"
-  >
-    <div v-if="fieldOptions?.length">
-      <el-button type="primary" @click="onQuery">查询</el-button>
-      <!-- <el-button @click="onReset">重置</el-button> -->
-      <slot></slot>
+  <div>
+    <multi-filter
+      ref="multiFilter"
+      v-model="filterParams"
+      :field-options="fieldOptions"
+      :list-options="listOptions"
+      :label-visible="true"
+      style="min-height: 42px"
+    >
+      <div>
+        <div v-if="fieldOptions?.length" style="display: inline-block">
+          <el-button type="primary" @click="onQuery">查询</el-button>
+          <!-- <el-button @click="onReset">重置</el-button> -->
+          <slot></slot>
+        </div>
+      </div>
+    </multi-filter>
+    <div style="position: fixed; right: 20px; margin-top: -42px">
+      <slot name="query-right" />
     </div>
-  </multi-filter>
+  </div>
 </template>
 <script>
 import MultiFilter from '../MultiFilter/index'
