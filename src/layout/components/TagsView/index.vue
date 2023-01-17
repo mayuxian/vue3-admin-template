@@ -250,6 +250,7 @@ function closeAllTags(view: any) {
   }
   toLastView(tagsViewStore.getVisitedViews, view)
 }
+
 function toLastView(visitedViews: any, view: any) {
   const latestView = visitedViews.slice(-1)[0]
   if (latestView) {
