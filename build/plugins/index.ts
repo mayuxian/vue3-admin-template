@@ -1,7 +1,8 @@
 import { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import vueSetupExtend from 'vite-plugin-vue-setup-extend'
+//vite-plugin-vue-setup-extend插件会影响sourcemap的文件定义，所以改换如下插件。
+import vueSetupExtend from 'vite-plugin-vue-setup-extend-plus'
 
 import svgIconsPlugin from './svg-icon.plugin'
 import AutoImportPlugin from './auto-import.plugin'
@@ -13,9 +14,9 @@ const vitePlugins: (PluginOption | PluginOption[])[] = [
   vue(),
   // have to
   vueJsx(),
+  vueSetupExtend(),
   svgLoader(),
   // support name
-  vueSetupExtend(),
   AutoImportPlugin,
   svgIconsPlugin,
   // legacy(),
