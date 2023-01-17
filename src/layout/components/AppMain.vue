@@ -2,9 +2,20 @@
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
       <router-view v-slot="{ Component, route }">
-        <KeepAlive :include="cachedViews">
-          <component :is="Component"></component>
+        <KeepAlive v-show="!route.meta.divide" :include="cachedViews">
+          <component :key="route.fullPath" :is="Component"></component>
         </KeepAlive>
+        <KeepAlive>
+          <component
+            v-if="route.meta.divide && !route.meta.noCache"
+            :key="route.fullPath"
+            :is="Component"
+          ></component>
+        </KeepAlive>
+        <component
+          v-if="route.meta.divide && route.meta.noCache"
+          :is="Component"
+        ></component>
       </router-view>
     </transition>
     <el-backtop :right="100" :bottom="280" />

@@ -78,7 +78,7 @@ defineExpose({
   tagRefs: data.tagRefs,
 })
 const visitedViews = computed(() => tagsViewStore.visitedViews)
-let curProjectId: any = null
+let divideId: any = null
 watch(
   () => route.path,
   () => {
@@ -110,23 +110,35 @@ function setItemRef(el: any) {
     data.tagRefs.push(el)
   }
 }
-function matchRoute(curRoute: any) {
-  return curRoute.meta.divide
-    ? curRoute.fullPath === route.fullPath
-    : curRoute.name === route.name || curRoute.path === route.path
+function matchObject(leftObj: any, rightObj: any) {
+  const leftKeys = Object.keys(leftObj)
+  const rightKeys = Object.keys(rightObj)
+  if (leftKeys.length != rightKeys.length) return false
+  return !leftKeys.some(
+    (key: any) => key != 'time' && leftObj[key] !== rightObj[key]
+  )
+}
+function matchRoute(routeItem: any, curRoute: any) {
+  if (curRoute?.meta?.divide) {
+    return (
+      routeItem.name == curRoute.name &&
+      matchObject(routeItem.query, curRoute.query) &&
+      matchObject(routeItem.params, curRoute.params)
+    )
+  } else {
+    return routeItem.name === curRoute.name || routeItem.path === curRoute.path
+  }
+  // return curRoute.meta.divide
+  //   ? curRoute.fullPath === route.fullPath
+  //   : curRoute.name === route.name || curRoute.path === route.path
 }
 function isActive(curRoute: any) {
-  console.log('------begin--------')
-  console.log('curRoute ', curRoute)
-  console.log('route ', route)
-  let isActive = matchRoute(curRoute)
+  let isActive = matchRoute(route, curRoute)
   if (route.meta.subpage) {
-    console.log('projectId', curProjectId)
+    console.log('divideId', divideId)
     isActive =
-      route.path.startsWith(curRoute.path) && curProjectId == curRoute.query.id
+      route.path.startsWith(curRoute.path) && divideId == curRoute.query.id
   }
-  console.log('isActive', isActive)
-  console.log('------end--------')
   return isActive
 }
 function isAffix(tag: any) {
@@ -181,8 +193,8 @@ function moveToCurrentTag() {
       console.log('moveToCurrentTag tag ', tag)
       console.log('moveToCurrentTag route', route)
       if (tag.to.path === route.fullPath) {
-        if (route.meta.alone) {
-          curProjectId = route.query.id //复制当前移动的项目的id
+        if (route.meta.divide) {
+          divideId = route.query.id //复制当前移动的项目的id
         }
         scrollPane.value?.moveToTarget(tag)
         // when query is different then update
@@ -198,9 +210,15 @@ function refreshSelectedTag(view: any) {
   //TODO:需要支持右键刷新
   tagsViewStore.delCachedView(view)
   nextTick(() => {
-    router.replace({
-      path: '/redirect' + view.fullPath,
+    view.query.time = Date.now().toString()
+    router.push({
+      // name: view.name,
+      path: view.fullPath,
+      query: view.query,
+      params: view.params,
     })
+    tagsViewStore.updateVisitedView(view)
+    // tagsViewStore.addCachedView(view)
   })
 }
 async function closeSelectedTag(view: any) {

@@ -5,10 +5,27 @@ interface TagsView {
   visitedViews: any[]
   cachedViews: any[]
 }
+function matchObject(leftObj: any, rightObj: any) {
+  const leftKeys = Object.keys(leftObj)
+  const rightKeys = Object.keys(rightObj)
+  if (leftKeys.length != rightKeys.length) return false
+  return !leftKeys.some(
+    (key: any) => key != 'time' && leftObj[key] !== rightObj[key]
+  )
+}
 function matchRoute(routeItem: any, curRoute: any) {
-  return curRoute.meta?.divide
-    ? routeItem.fullPath === curRoute.fullPath
-    : routeItem.name === curRoute.name || routeItem.path === curRoute.path
+  if (curRoute?.meta?.divide) {
+    return (
+      routeItem.name == curRoute.name &&
+      matchObject(routeItem.query, curRoute.query) &&
+      matchObject(routeItem.params, curRoute.params)
+    )
+  } else {
+    return routeItem.name === curRoute.name || routeItem.path === curRoute.path
+  }
+  // return curRoute.meta.divide
+  //   ? curRoute.fullPath === route.fullPath
+  //   : curRoute.name === route.name || curRoute.path === route.path
 }
 export const useTagsViewStore = defineStore({
   id: STORE_KEY,
@@ -74,7 +91,6 @@ export const useTagsViewStore = defineStore({
       const index = this.cachedViews.indexOf(viewName)
       index > -1 && this.cachedViews.splice(index, 1)
     },
-
     delOthersViews(view: any) {
       this.delOthersVisitedViews(view)
       this.delOthersCachedViews(view)
@@ -94,7 +110,6 @@ export const useTagsViewStore = defineStore({
         this.cachedViews = []
       }
     },
-
     delAllViews() {
       this.delAllVisitedViews()
       this.delAllCachedViews()
@@ -107,7 +122,6 @@ export const useTagsViewStore = defineStore({
     delAllCachedViews() {
       this.cachedViews = []
     },
-
     updateVisitedView(view: any) {
       for (let v of this.visitedViews) {
         if (matchRoute(v, view)) {
@@ -117,6 +131,16 @@ export const useTagsViewStore = defineStore({
           break
         }
       }
+    },
+    matchTagView(route: any) {
+      const tagview = this.visitedViews.find((vRoute: any) => {
+        return (
+          route.name == vRoute.name &&
+          matchObject(route.query, vRoute.query) &&
+          matchObject(route.params, vRoute.params)
+        )
+      })
+      return tagview
     },
   },
   persist: {

@@ -102,6 +102,10 @@ async function request(params: any, pageInit: any) {
     total: listJson.length,
   }
 }
+function init() {
+  console.log('order list init')
+}
+init()
 //#endregion
 //#region events
 function onGoDetail(row: any) {

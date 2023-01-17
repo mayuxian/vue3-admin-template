@@ -1,19 +1,22 @@
 <template>
-  <DetailHeader title="订单详情" />
-  <div class="page-detail-content">
-    <DetailCell
-      v-for="item in detailConfig"
-      :key="item.name"
-      :slot-key="item.name"
-      :label="item.label"
-      style="margin-right: 24px"
-      width="336px"
-      :text="item.formatter ? item.formatter(data[item.name]) : data[item.name]"
-    />
-    <DetailCell label="备注" style="margin-right: 24px">
-      <el-input v-model="data.remark" style="width: 500px" />
-    </DetailCell>
-  </div>
+  <div
+    ><DetailHeader title="订单详情" />
+    <div class="page-detail-content">
+      <DetailCell
+        v-for="item in detailConfig"
+        :key="item.name"
+        :slot-key="item.name"
+        :label="item.label"
+        style="margin-right: 24px"
+        width="336px"
+        :text="
+          item.formatter ? item.formatter(data[item.name]) : data[item.name]
+        "
+      />
+      <DetailCell label="备注" style="margin-right: 24px">
+        <el-input v-model="data.remark" style="width: 500px" />
+      </DetailCell> </div
+  ></div>
 </template>
 
 <script lang="ts" setup>
@@ -69,11 +72,11 @@ const data: any = reactive({
 //#endregion
 //#region methods
 function init() {
+  console.log('order detail -> init  route:', route)
   const orderData = listJson.find((x: any) => x.orderNo === route.query.orderNo)
   Object.assign(data, orderData || {})
 }
 init()
-onActivated(() => init())
 //#endregion
 //#region events
 //#endregion
