@@ -9,7 +9,7 @@
       <template #query-right>
         <el-button type="primary" @click="onAddUser">添加用户</el-button>
       </template>
-      <template #table-columns>
+      <template #columns-append>
         <el-table-column label="状态" width="80">
           <template #default="scope">
             <el-tag

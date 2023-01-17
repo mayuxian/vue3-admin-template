@@ -19,6 +19,17 @@ export default [
         meta: {
           icon: 'list',
           title: '订单信息',
+        },
+      },
+      {
+        path: 'detail',
+        name: 'orderDetail',
+        hidden: true,
+        authKey: 'order_detail',
+        component: () => import('@/views/order/Detail.vue'),
+        meta: {
+          icon: 'list',
+          title: '订单详情',
           devide: true,
         },
       },

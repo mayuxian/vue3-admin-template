@@ -1,20 +1,29 @@
 <template>
-  <div>
-    <ListPage
-      :request="request"
-      :table-columns="tableColumns"
-      :filter-fields="filterFields"
-      :filter-list-options="filterListOptions"
-    >
-    </ListPage>
-  </div>
+  <ListPage
+    :request="request"
+    :table-columns="tableColumns"
+    :filter-fields="filterFields"
+    :filter-list-options="filterListOptions"
+  >
+    <template #columns-append>
+      <el-table-column label="操作" fixed="right">
+        <template #default="scope">
+          <el-button type="primary" link @click="onGoDetail(scope.row)"
+            >订单详情</el-button
+          >
+        </template>
+      </el-table-column>
+    </template>
+  </ListPage>
 </template>
 
 <script lang="ts" setup name="orderList">
 import { ref, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import listJson from './list.json'
 
 //#region define
+const router = useRouter()
 //#endregion
 //#region reactive data
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -27,10 +36,6 @@ const tableColumns = ref([
   {
     label: '财务订单编号',
     prop: 'finOrderNo',
-  },
-  {
-    label: '提交时间',
-    prop: 'submitDatetime',
   },
   {
     label: '提交时间',
@@ -63,6 +68,7 @@ const filterFields = ref([
     componentProps: {
       placeholder: '',
       clearable: true,
+      width: '100px',
     },
   },
   {
@@ -86,42 +92,27 @@ const filterListOptions = ref({
 //#endregion
 //#region methods
 async function request(params: any, pageInit: any) {
+  console.log('order list request', params)
   //   init = pageInit //这种方式必须在事件中执行init() 才行
   bindInit.value = pageInit //这种可以直接应用绑定init即可
   //   const res = await adminApi.getUserList(params)
   //   return res?.data
-  return [
-    {
-      orderNo: '165679134966',
-      finOrderNo: '26548365981', //财务订单标号
-      submitDatetime: '2022年10月1日',
-      telphone: '13200000001',
-      money: 100.5,
-      source: '线下开单', //订单来源  xxApp,线下开单
-      status: '已完成', //代付款，已完成，已取消
-    },
-    {
-      orderNo: '165679131010',
-      finOrderNo: '97144698367', //财务订单标号
-      submitDatetime: '2022年10月2日',
-      telphone: '13200000002',
-      money: 99,
-      source: '腾讯视频', //订单来源  xxApp,线下开单
-      status: '待付款', //待付款，已完成，已取消
-    },
-    {
-      orderNo: '165679132318',
-      finOrderNo: '36257895123', //财务订单标号
-      submitDatetime: '2022年10月3日',
-      telphone: '13200000003',
-      money: 121,
-      source: '抖音', //订单来源  xxApp,线下开单
-      status: '已取消', //代付款，已完成，已取消
-    },
-  ]
+  return {
+    list: listJson,
+    total: listJson.length,
+  }
 }
 //#endregion
 //#region events
+function onGoDetail(row: any) {
+  console.log(row)
+  router.push({
+    name: 'orderDetail',
+    query: {
+      orderNo: row.orderNo,
+    },
+  })
+}
 //#endregion
 </script>
 

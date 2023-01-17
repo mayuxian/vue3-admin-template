@@ -25,6 +25,7 @@
         v-bind="props.tableOptions"
       >
         <el-table-column
+          v-if="!props.options?.indexHidden"
           type="index"
           label="序号"
           width="60"
@@ -50,7 +51,6 @@
           >
           </el-table-column>
         </template>
-        <slot name="table-columns" />
         <slot name="columns-append" />
       </el-table>
       <Pagination
@@ -68,6 +68,7 @@
 <script lang="ts" setup>
 import { useResizeObserver, useThrottleFn } from '@vueuse/core'
 import screenfull from 'screenfull'
+
 const props = defineProps({
   request: {
     type: [Function],
@@ -86,6 +87,10 @@ const props = defineProps({
     default: () => null,
   },
   tableOptions: {
+    type: Object,
+    default: null,
+  },
+  options: {
     type: Object,
     default: null,
   },
