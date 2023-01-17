@@ -30,7 +30,7 @@ export default [
         meta: {
           icon: 'list',
           title: '订单详情',
-          devide: true,
+          divide: true,
         },
       },
     ],

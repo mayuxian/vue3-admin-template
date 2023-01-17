@@ -40,12 +40,11 @@ export const useTagsViewStore = defineStore({
       }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { redirectedFrom, matched, ...viewData } = view
-      const title =
-        view.meta.title || view.params.title || view.query.titile || 'no-name'
-      const divideTitle = `${title}-${view.query.name || view.params.name}`
       this.visitedViews.push(
         Object.assign({}, viewData, {
-          title: view.meta?.divide ? divideTitle : title,
+          title: view.meta?.divide
+            ? `${view.meta.title}-${view.query.title || view.params.name}`
+            : view.meta.title,
           // query: view.query || {},
           // params: view.params || {},
         })

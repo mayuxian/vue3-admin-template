@@ -110,6 +110,7 @@ function onGoDetail(row: any) {
     name: 'orderDetail',
     query: {
       orderNo: row.orderNo,
+      title: row.orderNo,
     },
   })
 }
