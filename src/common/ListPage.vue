@@ -13,55 +13,60 @@
         <slot name="query-right" />
       </template>
     </HeaderQuerier>
-    <div>
-      <el-table
-        id="listpage_id"
-        v-loading="tableLoading"
-        :data="data.tableData"
-        stripe
-        border
-        default-expand-all
-        :max-height="tableMaxHeight"
-        v-bind="props.tableOptions"
-      >
-        <el-table-column
-          v-if="!props.options?.indexHidden"
-          type="index"
-          label="序号"
-          width="60"
-          :index="loadIndex"
-        />
-        <template v-for="col in tableColumns">
-          <slot v-if="$slots[col.prop]" :name="col.prop"> </slot>
-          <el-table-column
-            v-else
-            :key="col.prop"
-            :fixed="col.fixed"
-            :prop="col.prop"
-            :label="col.label"
-            :width="col.width"
-            :default-sort="col.defaultSort"
-            :show-overflow-tooltip="
-              col.showTooltip ||
-              col.showOverflowTooltip ||
-              col['show-overflow-tooltip']
-            "
-            :min-width="col.minWidth || col.width"
-            :formatter="col.formatter"
-          >
-          </el-table-column>
-        </template>
-        <slot name="columns-append" />
-      </el-table>
-      <Pagination
-        class="page-pagination"
-        :total="pager.total || 0"
-        :page-size="pager.size"
-        :current-page="pager.current"
-        @current-change="onSkipPage"
-        @size-change="onSkipSize"
+    <el-table
+      id="listpage_id"
+      v-bind="props.tableOptions"
+      v-loading="tableLoading"
+      :data="data.tableData"
+      :max-height="tableMaxHeight"
+      style="width: 100%"
+      stripe
+      border
+    >
+      <!-- :max-height="tableMaxHeight" -->
+      <!-- el-height-adaptive-table -->
+      <el-table-column
+        v-if="props.options?.selection"
+        type="selection"
+        width="55"
       />
-    </div>
+      <el-table-column
+        v-if="!props.options?.indexHidden"
+        type="index"
+        label="序号"
+        width="60"
+        :index="loadIndex"
+      />
+      <template v-for="col in tableColumns">
+        <slot v-if="$slots[col.prop]" :name="col.prop"> </slot>
+        <el-table-column
+          v-else
+          :key="col.prop"
+          :fixed="col.fixed"
+          :prop="col.prop"
+          :label="col.label"
+          :width="col.width"
+          :default-sort="col.defaultSort"
+          :show-overflow-tooltip="
+            col.showTooltip ||
+            col.showOverflowTooltip ||
+            col['show-overflow-tooltip']
+          "
+          :min-width="col.minWidth || col.width"
+          :formatter="col.formatter"
+        >
+        </el-table-column>
+      </template>
+      <slot name="columns-append" />
+    </el-table>
+    <Pagination
+      class="page-pagination"
+      :total="pager.total || 0"
+      :page-size="pager.size"
+      :current-page="pager.current"
+      @current-change="onSkipPage"
+      @size-change="onSkipSize"
+    />
   </div>
 </template>
 
@@ -169,12 +174,10 @@ const tableMaxHeight = ref(window.screen.height - 330)
 const throttledFn = useThrottleFn(() => {
   const el: any = document.getElementById('listpage_id')
   if (!el) return
-  let height = window.innerHeight - el.getBoundingClientRect().top - 50
-  // if (screenfull.isFullscreen) {
-  //   height -= 50
-  // }
+  const height = window.innerHeight - el.getBoundingClientRect().top - 50
+  console.log('tableMaxHeight', height)
   tableMaxHeight.value = height
-}, 0)
+}, 300)
 
 function doResize() {
   throttledFn()
