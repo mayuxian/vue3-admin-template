@@ -13,54 +13,56 @@
         <slot name="query-right" />
       </template>
     </HeaderQuerier>
-    <el-table
-      id="listpage_id"
-      ref="listPageRef"
-      v-bind="props.tableOptions"
-      v-loading="tableLoading"
-      :data="data.tableData"
-      :height="tableMaxHeight"
-      :max-height="tableMaxHeight"
-      :highlight-current-row="true"
-      style="width: 100%"
-      stripe
-      border
-    >
-      <!-- :height="tableMaxHeight" -->
-      <el-table-column
-        v-if="props.options?.selection"
-        type="selection"
-        width="55"
-      />
-      <el-table-column
-        v-if="!props.options?.indexHidden"
-        type="index"
-        label="序号"
-        width="60"
-        :index="loadIndex"
-      />
-      <template v-for="col in tableColumns">
-        <slot v-if="$slots[col.prop]" :name="col.prop"> </slot>
+    <div>
+      <el-table
+        id="listpage_id"
+        ref="listPageRef"
+        v-bind="props.tableOptions"
+        v-loading="tableLoading"
+        :data="data.tableData"
+        :height="tableMaxHeight"
+        :max-height="tableMaxHeight"
+        :highlight-current-row="true"
+        style="width: 100%"
+        stripe
+        border
+      >
+        <!-- :height="tableMaxHeight" -->
         <el-table-column
-          v-else
-          :key="col.prop"
-          :fixed="col.fixed"
-          :prop="col.prop"
-          :label="col.label"
-          :width="col.width"
-          :default-sort="col.defaultSort"
-          :show-overflow-tooltip="
-            col.showTooltip ||
-            col.showOverflowTooltip ||
-            col['show-overflow-tooltip']
-          "
-          :min-width="col.minWidth || col.width"
-          :formatter="col.formatter"
-        >
-        </el-table-column>
-      </template>
-      <slot name="columns-append" />
-    </el-table>
+          v-if="props.options?.selection"
+          type="selection"
+          width="55"
+        />
+        <el-table-column
+          v-if="!props.options?.indexHidden"
+          type="index"
+          label="序号"
+          width="60"
+          :index="loadIndex"
+        />
+        <template v-for="col in tableColumns">
+          <slot v-if="$slots[col.prop]" :name="col.prop"> </slot>
+          <el-table-column
+            v-else
+            :key="col.prop"
+            :fixed="col.fixed"
+            :prop="col.prop"
+            :label="col.label"
+            :width="col.width"
+            :default-sort="col.defaultSort"
+            :show-overflow-tooltip="
+              col.showTooltip ||
+              col.showOverflowTooltip ||
+              col['show-overflow-tooltip']
+            "
+            :min-width="col.minWidth || col.width"
+            :formatter="col.formatter"
+          >
+          </el-table-column>
+        </template>
+        <slot name="columns-append" />
+      </el-table>
+    </div>
     <Pagination
       class="page-pagination"
       :total="pager.total || 0"
