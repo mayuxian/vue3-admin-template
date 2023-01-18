@@ -15,16 +15,18 @@
     </HeaderQuerier>
     <el-table
       id="listpage_id"
+      ref="listPageRef"
       v-bind="props.tableOptions"
       v-loading="tableLoading"
       :data="data.tableData"
+      :height="tableMaxHeight"
       :max-height="tableMaxHeight"
+      :highlight-current-row="true"
       style="width: 100%"
       stripe
       border
     >
-      <!-- :max-height="tableMaxHeight" -->
-      <!-- el-height-adaptive-table -->
+      <!-- :height="tableMaxHeight" -->
       <el-table-column
         v-if="props.options?.selection"
         type="selection"
@@ -71,9 +73,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useResizeObserver, useThrottleFn } from '@vueuse/core'
+import { nextTick } from 'vue'
+import { useThrottleFn } from '@vueuse/core'
 import screenfull from 'screenfull'
-
 const props = defineProps({
   request: {
     type: [Function],
@@ -107,6 +109,7 @@ const createParamsRaw = () => ({
   size: 10,
 })
 const tableLoading = ref(false)
+const listPageRef = ref()
 const data = reactive({
   filterParams: createParamsRaw(),
   tableData: [],
@@ -132,11 +135,22 @@ async function init() {
   }
 }
 init()
+onBeforeMount(() => {
+  screenfull.on('change', doResize)
+  window.addEventListener('resize', doResize)
+  doResize()
+})
 onMounted(() => {
-  console.log('ListPage onMounted')
+  // doResize()
+})
+// onUpdated(() => {})
+onUnmounted(() => {
+  screenfull.off('change', doResize)
+  window.removeEventListener('resize', doResize)
 })
 onActivated(() => {
   console.log('ListPage onActivated')
+  doResize()
 })
 //#region 事件
 function onQuery(params: any) {
@@ -171,31 +185,31 @@ defineExpose({
 
 //#region 表格高度自适应
 const tableMaxHeight = ref(window.screen.height - 330)
+const tableHeight = ref()
 const throttledFn = useThrottleFn(() => {
-  const el: any = document.getElementById('listpage_id')
+  const el: any =
+    listPageRef.value?.$el || document.getElementById('listpage_id')
   if (!el) return
-  const height = window.innerHeight - el.getBoundingClientRect().top - 50
-  console.log('tableMaxHeight', height)
-  tableMaxHeight.value = height
+  nextTick(() => {
+    // setTimeout(() => {
+    let height = window.innerHeight - el.getBoundingClientRect().top - 50
+    // height = Math.floor(height)
+    tableHeight.value = listPageRef.value.$el.clientHeight
+    console.log('tableMaxHeight', height)
+    console.log('tableHeight', tableHeight.value)
+    // ElMessage.warning(
+    //   `tableMaxHeight:${height}  tableHeight:${tableHeight.value}`
+    // )
+    tableMaxHeight.value = height
+    listPageRef.value?.doLayout()
+    // }, 300)
+  })
 }, 300)
 
 function doResize() {
+  console.log('ListPage.vue doResize...')
   throttledFn()
 }
-onBeforeMount(() => {
-  screenfull.on('change', doResize)
-  window.addEventListener('resize', doResize)
-})
-onMounted(() => {
-  doResize()
-})
-onUpdated(() => {
-  doResize()
-})
-onUnmounted(() => {
-  screenfull.off('change', doResize)
-  window.removeEventListener('resize', doResize)
-})
 //#endregion
 </script>
 <style lang="scss" scoped></style>
