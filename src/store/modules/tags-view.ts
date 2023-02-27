@@ -5,6 +5,28 @@ interface TagsView {
   visitedViews: any[]
   cachedViews: any[]
 }
+function matchObject(leftObj: any, rightObj: any) {
+  const leftKeys = Object.keys(leftObj)
+  const rightKeys = Object.keys(rightObj)
+  if (leftKeys.length != rightKeys.length) return false
+  return !leftKeys.some(
+    (key: any) => key != 'time' && leftObj[key] !== rightObj[key]
+  )
+}
+function matchRoute(routeItem: any, curRoute: any) {
+  if (curRoute?.meta?.divide) {
+    return (
+      routeItem.name == curRoute.name &&
+      matchObject(routeItem.query, curRoute.query) &&
+      matchObject(routeItem.params, curRoute.params)
+    )
+  } else {
+    return routeItem.name === curRoute.name || routeItem.path === curRoute.path
+  }
+  // return curRoute.meta.divide
+  //   ? curRoute.fullPath === route.fullPath
+  //   : curRoute.name === route.name || curRoute.path === route.path
+}
 export const useTagsViewStore = defineStore({
   id: STORE_KEY,
   state: (): TagsView => ({
@@ -25,26 +47,23 @@ export const useTagsViewStore = defineStore({
       this.addCachedView(view)
     },
     addVisitedView(view: any) {
+      if (view.meta?.subpage) return //匹配路由>=3个属于二级子页面，则不需要tag
       if (
-        this.visitedViews.some(
-          v => v.name === view.name || v.path === view.path
-        )
-      )
+        this.visitedViews.some((v: any) => {
+          return matchRoute(v, view)
+        })
+      ) {
         return
+      }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { redirectedFrom, matched, ...viewData } = view
-      // console.log('viewData 1', viewData)
-      // console.log('viewData 2', toRaw(viewData))
-      // console.log('viewData 3', unref(viewData))
       this.visitedViews.push(
         Object.assign({}, viewData, {
-          title:
-            view.meta.title ||
-            view.params.title ||
-            view.query.titile ||
-            'no-name',
-          query: view.query || {},
-          params: view.params || {},
+          title: view.meta?.divide
+            ? `${view.meta.title}-${view.query.title || view.params.name}`
+            : view.meta.title,
+          // query: view.query || {},
+          // params: view.params || {},
         })
       )
     },
@@ -61,28 +80,24 @@ export const useTagsViewStore = defineStore({
     },
     delVisitedView(view: any) {
       for (const [i, v] of this.visitedViews.entries()) {
-        if (v.path === view.path) {
+        if (matchRoute(v, view)) {
           this.visitedViews.splice(i, 1)
           break
         }
       }
     },
     delCachedView(view: any) {
-      for (const [i, v] of this.visitedViews.entries()) {
-        if (v.path === view.path) {
-          this.visitedViews.splice(i, 1)
-          break
-        }
-      }
+      const viewName = view.meta.cacheName || view.name
+      const index = this.cachedViews.indexOf(viewName)
+      index > -1 && this.cachedViews.splice(index, 1)
     },
-
     delOthersViews(view: any) {
       this.delOthersVisitedViews(view)
       this.delOthersCachedViews(view)
     },
     delOthersVisitedViews(view: any) {
       this.visitedViews = this.visitedViews.filter((v: any) => {
-        return v.meta.affix || v.path === view.path
+        return v.meta.affix || matchRoute(v, view)
       })
     },
     delOthersCachedViews(view: any) {
@@ -95,7 +110,6 @@ export const useTagsViewStore = defineStore({
         this.cachedViews = []
       }
     },
-
     delAllViews() {
       this.delAllVisitedViews()
       this.delAllCachedViews()
@@ -103,21 +117,30 @@ export const useTagsViewStore = defineStore({
     delAllVisitedViews() {
       // keep affix tags
       const affixTags = this.visitedViews.filter(tag => tag.meta.affix)
-      this.visitedViews = affixTags
+      this.visitedViews = affixTags || []
     },
     delAllCachedViews() {
       this.cachedViews = []
     },
-
     updateVisitedView(view: any) {
       for (let v of this.visitedViews) {
-        if (v.path === view.path) {
-          // eslint-disable-next-line no-unused-vars
+        if (matchRoute(v, view)) {
+          // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
           const { redirectedFrom, matched, ...viewData } = view
           v = Object.assign(v, viewData)
           break
         }
       }
+    },
+    matchTagView(route: any) {
+      const tagview = this.visitedViews.find((vRoute: any) => {
+        return (
+          route.name == vRoute.name &&
+          matchObject(route.query, vRoute.query) &&
+          matchObject(route.params, vRoute.params)
+        )
+      })
+      return tagview
     },
   },
   persist: {

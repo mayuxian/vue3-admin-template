@@ -1,6 +1,7 @@
 import { ElMessage } from 'element-plus'
 export default {
-  install: (app: any, options: object) => {
+  install: (app: any, options: any) => {
+    return null
     app.config.errorHandler = (err: any, vm: any, info: any) => {
       console.error('vue errorHandler -> message:', err.message)
       console.error('vue errorHandler -> stack:', err.stack)

@@ -16,19 +16,19 @@ const doResize = (el, binding, vnode) => {
   // if (!tableHeight) {
   //   throw new Error(`el-$table must set the height. Such as height='100px'`)
   // }
-  const bottomOffset = (value && value.bottomOffset) || 60
+  const bottomOffset = (value && value.bottomOffset) || 50
 
   // if (!$table) return
   const height =
     window.innerHeight - el.getBoundingClientRect().top - bottomOffset
   if (!tableHeight || height === tableHeight) return
-    // el.style.height = height + 'px'
+  // el.style.height = height + 'px'
   // el.style.maxHeight = height + 'px'
-  const ctx = vnode?.ref?.i?.ctx
-  if (ctx) {
-    // ctx.layout && ctx.layout.setMaxHeight && ctx.layout?.setMaxHeight(height)
-    // ctx.doLayout && ctx.doLayout()
-  }
+  // const ctx = vnode?.ref?.i?.ctx
+  // if (ctx) {
+  //   ctx.layout && ctx.layout.setMaxHeight && ctx.layout?.setMaxHeight(height)
+  //   ctx.doLayout && ctx.doLayout()
+  // }
 }
 
 const adaptive = {
@@ -46,6 +46,14 @@ const adaptive = {
     doResize(el, binding, vnode)
   },
   unmounted(el) {
+    el.resizeListener?.stop && el.resizeListener?.stop()
+  },
+  activated(el, binding, vnode) {
+    console.log('el-table-adaptive activated')
+    doResize(el, binding, vnode)
+  },
+  deactivated() {
+    console.log('el-table-adaptive deactivated')
     el.resizeListener?.stop && el.resizeListener?.stop()
   },
 }

@@ -1,39 +1,40 @@
 <template>
   <div class="page-box">
     <HeaderQuerier
+      v-if="props.filterFields?.length || $slots['query-right']"
       v-model="data.filterParams"
-      :field-options="filterFields"
-      :list-options="filterListOptions"
+      :field-options="props.filterFields"
+      :list-options="props.filterListOptions"
       @query="onQuery"
       @reset="onReset"
-      style="`position: relative; top: 5px"
     >
       <slot name="query" />
+      <template #query-right>
+        <slot name="query-right" />
+      </template>
     </HeaderQuerier>
-    <div
-      :style="`position: relative; float: right;${
-        filterFields?.length ? 'top: -42px;' : 'top: -22px;'
-      };`"
-    >
-      <slot name="query-right" />
-    </div>
-    <div
-      :style="`position: relative;${
-        filterFields?.length ? 'top: -25px;' : 'top: -5px;'
-      };`"
-    >
-      <!-- v-el-height-adaptive-table有待完善 -->
+    <div>
       <el-table
-        id="ListPage-id"
+        id="listpage_id"
+        ref="listPageRef"
+        v-bind="props.tableOptions"
         v-loading="tableLoading"
         :data="data.tableData"
+        :height="tableMaxHeight"
+        :max-height="tableMaxHeight"
+        :highlight-current-row="true"
+        style="width: 100%"
         stripe
         border
-        default-expand-all
-        :max-height="tableMaxHeight"
-        v-bind="props.tableOptions"
       >
+        <!-- :height="tableMaxHeight" -->
         <el-table-column
+          v-if="props.options?.selection"
+          type="selection"
+          width="55"
+        />
+        <el-table-column
+          v-if="!props.options?.indexHidden"
           type="index"
           label="序号"
           width="60"
@@ -59,23 +60,23 @@
           >
           </el-table-column>
         </template>
-        <slot name="table-columns" />
         <slot name="columns-append" />
       </el-table>
-      <Pagination
-        class="page-pagination"
-        :total="pager.total || 0"
-        :page-size="pager.size"
-        :current-page="pager.current"
-        @current-change="onSkipPage"
-        @size-change="onSkipSize"
-      />
     </div>
+    <Pagination
+      class="page-pagination"
+      :total="pager.total || 0"
+      :page-size="pager.size"
+      :current-page="pager.current"
+      @current-change="onSkipPage"
+      @size-change="onSkipSize"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useResizeObserver, useThrottleFn } from '@vueuse/core'
+import { nextTick } from 'vue'
+import { useThrottleFn } from '@vueuse/core'
 import screenfull from 'screenfull'
 const props = defineProps({
   request: {
@@ -98,6 +99,10 @@ const props = defineProps({
     type: Object,
     default: null,
   },
+  options: {
+    type: Object,
+    default: null,
+  },
 })
 const createParamsRaw = () => ({
   current: 1,
@@ -106,6 +111,7 @@ const createParamsRaw = () => ({
   size: 10,
 })
 const tableLoading = ref(false)
+const listPageRef = ref()
 const data = reactive({
   filterParams: createParamsRaw(),
   tableData: [],
@@ -131,11 +137,22 @@ async function init() {
   }
 }
 init()
+onBeforeMount(() => {
+  screenfull.on('change', doResize)
+  window.addEventListener('resize', doResize)
+  doResize()
+})
 onMounted(() => {
-  console.log('ListPage onMounted')
+  // doResize()
+})
+// onUpdated(() => {})
+onUnmounted(() => {
+  screenfull.off('change', doResize)
+  window.removeEventListener('resize', doResize)
 })
 onActivated(() => {
   console.log('ListPage onActivated')
+  doResize()
 })
 //#region 事件
 function onQuery(params: any) {
@@ -170,33 +187,31 @@ defineExpose({
 
 //#region 表格高度自适应
 const tableMaxHeight = ref(window.screen.height - 330)
+const tableHeight = ref()
 const throttledFn = useThrottleFn(() => {
-  const el: any = document.getElementById('pagetable-id')
+  const el: any =
+    listPageRef.value?.$el || document.getElementById('listpage_id')
   if (!el) return
-  let height = window.innerHeight - el.getBoundingClientRect().top - 50
-  // if (screenfull.isFullscreen) {
-  //   height -= 50
-  // }
-  tableMaxHeight.value = height
-}, 0)
+  nextTick(() => {
+    // setTimeout(() => {
+    let height = window.innerHeight - el.getBoundingClientRect().top - 50
+    // height = Math.floor(height)
+    tableHeight.value = listPageRef.value.$el.clientHeight
+    console.log('tableMaxHeight', height)
+    console.log('tableHeight', tableHeight.value)
+    // ElMessage.warning(
+    //   `tableMaxHeight:${height}  tableHeight:${tableHeight.value}`
+    // )
+    tableMaxHeight.value = height
+    listPageRef.value?.doLayout()
+    // }, 300)
+  })
+}, 300)
 
 function doResize() {
+  console.log('ListPage.vue doResize...')
   throttledFn()
 }
-onBeforeMount(() => {
-  screenfull.on('change', doResize)
-  window.addEventListener('resize', doResize)
-})
-onMounted(() => {
-  doResize()
-})
-onUpdated(() => {
-  doResize()
-})
-onUnmounted(() => {
-  screenfull.off('change', doResize)
-  window.removeEventListener('resize', doResize)
-})
 //#endregion
 </script>
 <style lang="scss" scoped></style>

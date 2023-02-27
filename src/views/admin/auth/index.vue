@@ -9,7 +9,7 @@
           >添加权限</el-button
         >
       </template>
-      <template #table-columns>
+      <template #columns-append>
         <el-table-column label="操作" width="500" fixed="right">
           <template #default="scope">
             <el-button
@@ -69,7 +69,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="authManage">
 import { filterFields, tableColumns } from './config'
 import authApi from '@/api/auth'
 import { usePermissionStore } from '@/store/modules/permission'

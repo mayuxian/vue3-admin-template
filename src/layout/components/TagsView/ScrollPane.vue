@@ -14,20 +14,14 @@ import { getCurrentInstance } from 'vue'
 const inst: any = getCurrentInstance()
 const tagAndTagSpacing = 4 // tagAndTagSpacing
 const scrollContainer: any = ref<HTMLDivElement>()
-const left = ref(0)
-const scrollWrapper = computed(() => scrollContainer.$refs.wrap)
+const scrollWrapper = computed(() => scrollContainer.value.wrapRef)
 const emit = defineEmits(['scroll'])
-onMounted(() => {
-  // unref(scrollContainer)?.warp$?.addEventListener('scroll', emitScroll, true)
-})
-onBeforeUnmount(() => {
-  // scrollContainer?.removeEventListener('scroll', emitScroll)
-})
 
 function handleScroll(e: any) {
   const eventDelta = e.wheelDelta || -e.deltaY * 40
-  const $scrollWrapper: any = scrollWrapper
-  $scrollWrapper.scrollLeft = $scrollWrapper.scrollLeft + eventDelta / 4
+  const $scrollWrapper: any = scrollWrapper.value
+  const left = $scrollWrapper.scrollLeft + eventDelta / 4
+  $scrollWrapper.scrollLeft = left
 }
 function emitScroll() {
   emit('scroll')
@@ -37,16 +31,13 @@ function moveToTarget(currentTag: any) {
   const $containerWidth = $container.offsetWidth
   const $scrollWrapper: any = scrollWrapper
   const tagList = inst.parent?.exposed?.tagRefs
-
   let firstTag = null
   let lastTag = null
-
   // find first tag and last tag
   if (tagList?.length > 0) {
     firstTag = tagList[0]
     lastTag = tagList[tagList.length - 1]
   }
-
   if (firstTag === currentTag) {
     $scrollWrapper.scrollLeft = 0
   } else if (lastTag === currentTag) {

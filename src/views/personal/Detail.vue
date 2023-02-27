@@ -40,7 +40,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="personalInfo">
 import loginApi from '@/api/login'
 import { ElMessage } from 'element-plus'
 const userInfo = reactive({
