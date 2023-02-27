@@ -1,4 +1,4 @@
-# vue3-admin-template
+# vue3-admin-template 管理端极简纯净版脚手架模板工程
 **此项目是集成vue3 +  vite + Element-Plus + Pinia + vue-router的后台管理系统的模板工程。**  
 >即开即用，提供初创团队或新项目专注于快速启动和开发交易。不再考虑脚手架编译打包和优化、ESLlint统一配置、项目和编码规范等问题。  
 参考、借鉴[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin/)项目。
@@ -7,6 +7,17 @@
 [在线预览页面](http://vue3-admin-template.mayuxian.cn/)
 ![首页](https://resource.mayuxian.cn/images/vue3-admin-template-home.jpg)
 
+## 特性(Features)
+- [x] vite打包编译优化
+- [x] 表格的自适应
+- [x] 打开页面进度条显示
+- [x] 页面全屏
+- [x] 全局设置组件大小
+- [x] 页签页
+- [x] 主题颜色
+- [x] 提供动态创建Dialog，弹出同一弹框组件实例
+- [x] **同一路由页签分裂模式 （推荐）**  
+ 
 ## 规范文档
 项目和编码规范文档是致力于为初创企业、初创团队、新项目提供统一的规范，方便项目快速启动，团队协作，保障质量。  
 建议约定团队成员安装如下项目和编码规范开发。 
@@ -51,7 +62,6 @@ router、store、plugins、directive目录可直接创建文件，自动动态�
   提供了倒计时、数据检查器、加密器、存储器、类型检查器等  
 - **提供主题颜色替换**
   
-
 ## 组件(Components)
 - **具有SvgIcon组件**  
   路径：components/SvgIcon/index.vue  
@@ -71,15 +81,6 @@ router、store、plugins、directive目录可直接创建文件，自动动态�
    可以实现编辑页面字段的增量更新，避免只修改一个字段更新全部字段的问题。  
    规范统一订单详情页字段的显示样式。  
    编写订单详情页可参考```？？``` 
-
-## 特性(Features)
-- [x] vite打包编译优化
-- [x] 表格的自适应
-- [x] 打开页面进度条显示
-- [x] 页面全屏
-- [x] 全局设置组件大小
-- [x] 页签页
-- [ ] 主题颜色
 
 ## 安装(Installing)
 先安装项目依赖
