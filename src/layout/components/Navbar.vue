@@ -11,6 +11,15 @@
 
     <div class="right-menu">
       <template v-if="device !== 'mobile'">
+        <a
+          target="_blank"
+          href="https://github.com/mayuxian/vue3-admin-template/"
+        >
+          <SvgIcon
+            name="github-fill"
+            size="23"
+            class="right-menu-item hover-effect"
+        /></a>
         <Screenfull id="screenfull" class="right-menu-item hover-effect" />
         <el-tooltip content="设置大小" effect="dark" placement="bottom">
           <SizeSelect id="size-select" class="right-menu-item hover-effect" />
