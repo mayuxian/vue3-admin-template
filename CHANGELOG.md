@@ -7,3 +7,5 @@
 修复pinia store缓存多选项卡tagsview时因redirectedFrom字段递归导致JSON.stringify报错问题
 
 ##  v1.0.2 
+
+测试加密
