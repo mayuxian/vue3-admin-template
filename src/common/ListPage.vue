@@ -3,6 +3,7 @@
     <HeaderQuerier
       v-if="props.filterFields?.length || $slots['query-right']"
       v-model="data.filterParams"
+      :form-props="filterProps"
       :field-options="props.filterFields"
       :list-options="props.filterListOptions"
       @query="onQuery"
@@ -81,6 +82,10 @@ import screenfull from 'screenfull'
 const props = defineProps({
   request: {
     type: [Function],
+    default: null,
+  },
+  filterProps: {
+    type: Object,
     default: null,
   },
   filterFields: {

@@ -6,6 +6,7 @@
       :field-options="fieldOptions"
       :list-options="listOptions"
       :label-visible="true"
+      :form-props="formProps"
       style="min-height: 42px"
     >
       <div>
@@ -28,6 +29,10 @@ export default {
     MultiFilter,
   },
   props: {
+    formProps: {
+      type: Object,
+      default: null,
+    },
     fieldOptions: {
       type: Array,
       required: false,
