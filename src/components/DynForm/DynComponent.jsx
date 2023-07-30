@@ -95,7 +95,7 @@ export default defineComponent({
           ...props,
           modelValue: this.innerValue,
           'onUpdate:modelValue': value => {
-            this.innerValue = value?.trim()
+            this.innerValue = value instanceof String ? value?.trim() : value
           },
         },
         this.getSubCmpt(cmpt)

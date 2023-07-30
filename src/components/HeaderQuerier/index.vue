@@ -72,8 +72,8 @@ export default {
     onQuery() {
       let params = {
         ...(this.filterParams || {}),
-        size: 10,
-        current: 1,
+        // size: 10,
+        // current: 1,
       }
       this.$emit('update:modelValue', params)
       this.$emit('query', params)
