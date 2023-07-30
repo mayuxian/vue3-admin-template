@@ -3,7 +3,7 @@
     <HeaderQuerier
       v-if="props.filterFields?.length || $slots['query-right']"
       v-model="data.filterParams"
-      :form-props="filterProps"
+      :form-props="props.filterProps"
       :field-options="props.filterFields"
       :list-options="props.filterListOptions"
       @query="onQuery"
@@ -21,17 +21,18 @@
         v-bind="props.tableOptions"
         v-loading="tableLoading"
         :data="data.tableData"
-        :height="tableMaxHeight"
         :max-height="tableMaxHeight"
         :highlight-current-row="true"
         style="width: 100%"
         stripe
         border
       >
+        <slot name="columns-head" />
         <!-- :height="tableMaxHeight" -->
         <el-table-column
           v-if="props.options?.selection"
           type="selection"
+          fixed="left"
           width="55"
         />
         <el-table-column
@@ -39,6 +40,7 @@
           type="index"
           label="序号"
           width="60"
+          fixed="left"
           :index="loadIndex"
         />
         <template v-for="col in tableColumns">
@@ -110,10 +112,8 @@ const props = defineProps({
   },
 })
 const createParamsRaw = () => ({
-  current: 1,
   pageNum: 1,
   pageSize: 10,
-  size: 10,
 })
 const tableLoading = ref(false)
 const listPageRef = ref()
@@ -156,7 +156,7 @@ onUnmounted(() => {
   window.removeEventListener('resize', doResize)
 })
 onActivated(() => {
-  console.log('ListPage onActivated')
+  // console.log('ListPage onActivated')
   doResize()
 })
 //#region 事件
@@ -169,17 +169,17 @@ function onReset() {
   data.filterParams = createParamsRaw()
   init()
 }
-function onSkipPage(pageNum = 1) {
-  if (pager.current === pageNum) return
-  pager.current = pageNum
-  data.filterParams.pageNum = pageNum
+function onSkipPage(pageNo = 1) {
+  if (pager.current === pageNo) return
+  pager.current = pageNo
+  data.filterParams.pageNo = pageNo
   init()
 }
 function onSkipSize(size = 10) {
   if (pager.size === size) return
   pager.size = size
   data.filterParams.pageSize = size
-  data.filterParams.pageNum = 1
+  data.filterParams.pageNo = 1
   init()
 }
 function loadIndex(index: number) {
@@ -202,8 +202,8 @@ const throttledFn = useThrottleFn(() => {
     let height = window.innerHeight - el.getBoundingClientRect().top - 50
     // height = Math.floor(height)
     tableHeight.value = listPageRef.value.$el.clientHeight
-    console.log('tableMaxHeight', height)
-    console.log('tableHeight', tableHeight.value)
+    // console.log('tableMaxHeight', height)
+    // console.log('tableHeight', tableHeight.value)
     // ElMessage.warning(
     //   `tableMaxHeight:${height}  tableHeight:${tableHeight.value}`
     // )
@@ -214,7 +214,6 @@ const throttledFn = useThrottleFn(() => {
 }, 300)
 
 function doResize() {
-  console.log('ListPage.vue doResize...')
   throttledFn()
 }
 //#endregion
