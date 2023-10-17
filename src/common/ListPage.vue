@@ -14,7 +14,8 @@
         <slot name="query-right" />
       </template>
     </HeaderQuerier>
-    <div>
+    <slot name="query-bottom" />
+    <div style="overflow-y: auto">
       <el-table
         id="listpage_id"
         ref="listPageRef"
@@ -26,6 +27,7 @@
         style="width: 100%"
         stripe
         border
+        @expand-change="onExpand"
       >
         <slot name="columns-head" />
         <!-- :height="tableMaxHeight" -->
@@ -73,6 +75,7 @@
       :current-page="pager.current"
       @current-change="onSkipPage"
       @size-change="onSkipSize"
+      v-bind="pagerOptions"
     />
   </div>
 </template>
@@ -81,6 +84,8 @@
 import { nextTick } from 'vue'
 import { useThrottleFn } from '@vueuse/core'
 import screenfull from 'screenfull'
+import Pagination from '@/common/Pagination/index.vue'
+const emit = defineEmits(['expand-change'])
 const props = defineProps({
   request: {
     type: [Function],
@@ -110,9 +115,13 @@ const props = defineProps({
     type: Object,
     default: null,
   },
+  pagerOptions: {
+    type: Object,
+    default: null,
+  },
 })
 const createParamsRaw = () => ({
-  pageNum: 1,
+  pageNo: 1,
   pageSize: 10,
 })
 const tableLoading = ref(false)
@@ -142,6 +151,9 @@ async function init() {
   }
 }
 init()
+function onExpand() {
+  emit('expand-change', ...arguments)
+}
 onBeforeMount(() => {
   screenfull.on('change', doResize)
   window.addEventListener('resize', doResize)
@@ -179,8 +191,10 @@ function onSkipSize(size = 10) {
   if (pager.size === size) return
   pager.size = size
   data.filterParams.pageSize = size
+  pager.current = 1
   data.filterParams.pageNo = 1
   init()
+  doResize()
 }
 function loadIndex(index: number) {
   return pager?.size * (pager.current - 1) + index + 1

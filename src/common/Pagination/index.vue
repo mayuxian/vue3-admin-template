@@ -34,6 +34,10 @@ const props = defineProps({
     type: String,
     default: 'total, sizes, prev, pager, next',
   },
+  pageSizes: {
+    type: Array,
+    default: null,
+  },
   background: {
     type: Boolean,
     default: true,
