@@ -56,7 +56,6 @@ const curPage = computed({
     return props.currentPage
   },
   set(val: any) {
-    console.log(val)
     emit('update:currentChange', val)
   },
 })

@@ -142,7 +142,7 @@ async function init() {
     }
     tableLoading.value = true
     const resData = await props.request(data.filterParams, init)
-    data.tableData = resData?.list
+    data.tableData = resData?.list || []
     pager.total = resData?.total
   } catch (err: any) {
     ElMessage.error(err?.message)
@@ -175,10 +175,16 @@ onActivated(() => {
 function onQuery(params: any) {
   data.filterParams = createParamsRaw()
   Object.assign(data.filterParams, params)
+  pager.current = 1
+  data.filterParams.pageNo = 1
+  data.filterParams.pageSize = pager.size
   init()
 }
 function onReset() {
   data.filterParams = createParamsRaw()
+  pager.current = 1
+  data.filterParams.pageNo = 1
+  data.filterParams.pageSize = pager.size
   init()
 }
 function onSkipPage(pageNo = 1) {
