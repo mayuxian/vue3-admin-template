@@ -2,10 +2,11 @@
   <div>
     <multi-filter
       ref="multiFilter"
-      v-model="filterParams"
+      v-model="$filterParams"
       :field-options="fieldOptions"
       :list-options="listOptions"
       :label-visible="true"
+      :form-props="formProps"
       style="min-height: 42px"
     >
       <div>
@@ -28,6 +29,10 @@ export default {
     MultiFilter,
   },
   props: {
+    formProps: {
+      type: Object,
+      default: null,
+    },
     fieldOptions: {
       type: Array,
       required: false,
@@ -48,15 +53,16 @@ export default {
   emits: ['update:modelValue', 'query'],
   data() {
     return {
-      filterParams: {},
+      $filterParams: {},
       multiFilterFields: null,
       filterlistOptions: null,
     }
   },
   watch: {
-    filterParams: {
+    $filterParams: {
       deep: true,
       handler(newVal, oldVal) {
+        console.log('watch $filterParams ', newVal)
         if (newVal != oldVal) {
           this.$emit('update:modelValue', newVal)
         }
@@ -65,10 +71,11 @@ export default {
   },
   methods: {
     onQuery() {
+      console.log('onQuery $filterParams ', this.$filterParams)
       let params = {
-        ...(this.filterParams || {}),
-        size: 10,
-        current: 1,
+        ...(this.$filterParams || {}),
+        // size: 10,
+        // current: 1,
       }
       this.$emit('update:modelValue', params)
       this.$emit('query', params)

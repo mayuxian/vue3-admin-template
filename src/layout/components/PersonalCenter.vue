@@ -1,46 +1,57 @@
 <template>
-  <el-dropdown trigger="click">
-    <span class="el-dropdown-link">
-      <el-avatar :src="userPhoto" :size="32" fit="contain">
-        <SvgIcon name="avatar" style="width: 32px; height: 32px" />
-      </el-avatar>
-      <div class="user_name">{{
-        userStore.getUserInfo?.nickname || '用户名'
-      }}</div>
-      <el-icon class="el-icon--right">
-        <arrow-down class="icon-arrow" />
-      </el-icon>
-    </span>
-    <template #dropdown>
-      <el-dropdown-menu>
-        <el-dropdown-item
-          v-for="menu in menuList"
-          :key="menu.name"
-          :to="menu.link"
-          :divided="menu.divided"
-          @click="routerChange(menu)"
-          >{{ menu.title }}</el-dropdown-item
-        >
-      </el-dropdown-menu>
-    </template>
-  </el-dropdown>
+  <div
+    style="display: inline-block; display: inline-flex; vertical-align: middle"
+  >
+    <el-dropdown trigger="click">
+      <span class="el-dropdown-link">
+        <el-avatar :src="userPhoto" :size="32" fit="contain">
+          <SvgIcon name="avatar" style="width: 32px; height: 32px" />
+        </el-avatar>
+        <div class="user_name">{{
+          userStore.getUserInfo?.nickname || '用户名'
+        }}</div>
+        <el-icon class="el-icon--right">
+          <arrow-down class="icon-arrow" />
+        </el-icon>
+      </span>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item
+            v-for="menu in menuList"
+            :key="menu.name"
+            :to="menu.link"
+            :divided="menu.divided"
+            @click="routerChange(menu)"
+            >{{ menu.title }}</el-dropdown-item
+          >
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+    <UpdatePwdDialog v-model:visible="updatePwdDialogVisible" />
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { ArrowDown } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'
+import UpdatePwdDialog from './UpdatePwdDialog.vue'
 const router = useRouter()
 const userStore = useUserStore()
 
 const userPhoto = computed(() => userStore.getUserInfo?.photo)
-
+const updatePwdDialogVisible = ref(false)
 const menuList = reactive([
   { title: '首页', link: '/', divided: false },
   { title: '个人信息', link: '/personal/info', divided: false },
+  { title: '修改密码', name: 'updatePwd', divided: false },
   { title: '退出', name: 'exit', link: '/login', divided: true },
 ])
 
 const routerChange = async (menu: any) => {
+  if (menu.name == 'updatePwd') {
+    updatePwdDialogVisible.value = true
+    return
+  }
   if (menu.name === 'exit') {
     await logout()
   }

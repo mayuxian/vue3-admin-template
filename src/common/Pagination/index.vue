@@ -34,6 +34,10 @@ const props = defineProps({
     type: String,
     default: 'total, sizes, prev, pager, next',
   },
+  pageSizes: {
+    type: Array,
+    default: null,
+  },
   background: {
     type: Boolean,
     default: true,
@@ -52,7 +56,6 @@ const curPage = computed({
     return props.currentPage
   },
   set(val: any) {
-    console.log(val)
     emit('update:currentChange', val)
   },
 })

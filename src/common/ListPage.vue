@@ -3,6 +3,7 @@
     <HeaderQuerier
       v-if="props.filterFields?.length || $slots['query-right']"
       v-model="data.filterParams"
+      :form-props="props.filterProps"
       :field-options="props.filterFields"
       :list-options="props.filterListOptions"
       @query="onQuery"
@@ -13,24 +14,27 @@
         <slot name="query-right" />
       </template>
     </HeaderQuerier>
-    <div>
+    <slot name="query-bottom" />
+    <div style="overflow-y: auto">
       <el-table
         id="listpage_id"
         ref="listPageRef"
         v-bind="props.tableOptions"
         v-loading="tableLoading"
         :data="data.tableData"
-        :height="tableMaxHeight"
         :max-height="tableMaxHeight"
         :highlight-current-row="true"
         style="width: 100%"
         stripe
         border
+        @expand-change="onExpand"
       >
+        <slot name="columns-head" />
         <!-- :height="tableMaxHeight" -->
         <el-table-column
           v-if="props.options?.selection"
           type="selection"
+          fixed="left"
           width="55"
         />
         <el-table-column
@@ -38,6 +42,7 @@
           type="index"
           label="序号"
           width="60"
+          fixed="left"
           :index="loadIndex"
         />
         <template v-for="col in tableColumns">
@@ -70,6 +75,7 @@
       :current-page="pager.current"
       @current-change="onSkipPage"
       @size-change="onSkipSize"
+      v-bind="pagerOptions"
     />
   </div>
 </template>
@@ -78,9 +84,15 @@
 import { nextTick } from 'vue'
 import { useThrottleFn } from '@vueuse/core'
 import screenfull from 'screenfull'
+import Pagination from '@/common/Pagination/index.vue'
+const emit = defineEmits(['expand-change'])
 const props = defineProps({
   request: {
     type: [Function],
+    default: null,
+  },
+  filterProps: {
+    type: Object,
     default: null,
   },
   filterFields: {
@@ -103,12 +115,14 @@ const props = defineProps({
     type: Object,
     default: null,
   },
+  pagerOptions: {
+    type: Object,
+    default: null,
+  },
 })
 const createParamsRaw = () => ({
-  current: 1,
-  pageNum: 1,
+  pageNo: 1,
   pageSize: 10,
-  size: 10,
 })
 const tableLoading = ref(false)
 const listPageRef = ref()
@@ -128,7 +142,7 @@ async function init() {
     }
     tableLoading.value = true
     const resData = await props.request(data.filterParams, init)
-    data.tableData = resData?.list
+    data.tableData = resData?.list || []
     pager.total = resData?.total
   } catch (err: any) {
     ElMessage.error(err?.message)
@@ -137,6 +151,9 @@ async function init() {
   }
 }
 init()
+function onExpand() {
+  emit('expand-change', ...arguments)
+}
 onBeforeMount(() => {
   screenfull.on('change', doResize)
   window.addEventListener('resize', doResize)
@@ -151,31 +168,39 @@ onUnmounted(() => {
   window.removeEventListener('resize', doResize)
 })
 onActivated(() => {
-  console.log('ListPage onActivated')
+  // console.log('ListPage onActivated')
   doResize()
 })
 //#region 事件
 function onQuery(params: any) {
   data.filterParams = createParamsRaw()
   Object.assign(data.filterParams, params)
+  pager.current = 1
+  data.filterParams.pageNo = 1
+  data.filterParams.pageSize = pager.size
   init()
 }
 function onReset() {
   data.filterParams = createParamsRaw()
+  pager.current = 1
+  data.filterParams.pageNo = 1
+  data.filterParams.pageSize = pager.size
   init()
 }
-function onSkipPage(pageNum = 1) {
-  if (pager.current === pageNum) return
-  pager.current = pageNum
-  data.filterParams.pageNum = pageNum
+function onSkipPage(pageNo = 1) {
+  if (pager.current === pageNo) return
+  pager.current = pageNo
+  data.filterParams.pageNo = pageNo
   init()
 }
 function onSkipSize(size = 10) {
   if (pager.size === size) return
   pager.size = size
   data.filterParams.pageSize = size
-  data.filterParams.pageNum = 1
+  pager.current = 1
+  data.filterParams.pageNo = 1
   init()
+  doResize()
 }
 function loadIndex(index: number) {
   return pager?.size * (pager.current - 1) + index + 1
@@ -197,8 +222,8 @@ const throttledFn = useThrottleFn(() => {
     let height = window.innerHeight - el.getBoundingClientRect().top - 50
     // height = Math.floor(height)
     tableHeight.value = listPageRef.value.$el.clientHeight
-    console.log('tableMaxHeight', height)
-    console.log('tableHeight', tableHeight.value)
+    // console.log('tableMaxHeight', height)
+    // console.log('tableHeight', tableHeight.value)
     // ElMessage.warning(
     //   `tableMaxHeight:${height}  tableHeight:${tableHeight.value}`
     // )
@@ -209,7 +234,6 @@ const throttledFn = useThrottleFn(() => {
 }, 300)
 
 function doResize() {
-  console.log('ListPage.vue doResize...')
   throttledFn()
 }
 //#endregion
