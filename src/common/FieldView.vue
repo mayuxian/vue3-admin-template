@@ -7,9 +7,14 @@
             <slot v-else-if="$slots[props.slotKey]" :name="props.slotKey" :style="`min-width:${props.textWidth}`">
             </slot>
             <template v-else>
-
                 {{ text }}
             </template>
+            <!-- <div style="width: 100%;text-align: right;">
+                <slot name="suffix" style="text-align: right;"></slot>
+            </div> -->
+            <div style="float: right;margin-right: 10px;">
+                <slot name="in-suffix"></slot>
+            </div>
         </div>
         <slot name="suffix"></slot>
     </div>
