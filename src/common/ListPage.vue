@@ -28,6 +28,7 @@
         stripe
         border
         @expand-change="onExpand"
+        @selection-change="onSelectionChange"
       >
         <slot name="columns-head" />
         <!-- :height="tableMaxHeight" -->
@@ -85,7 +86,7 @@ import { nextTick } from 'vue'
 import { useThrottleFn } from '@vueuse/core'
 import screenfull from 'screenfull'
 import Pagination from '@/common/Pagination/index.vue'
-const emit = defineEmits(['expand-change'])
+const emit = defineEmits(['expand-change', 'selection-change'])
 const props = defineProps({
   request: {
     type: [Function],
@@ -153,6 +154,9 @@ async function init() {
 init()
 function onExpand() {
   emit('expand-change', ...arguments)
+}
+function onSelectionChange(list: any) {
+  emit('selection-change', list)
 }
 onBeforeMount(() => {
   screenfull.on('change', doResize)
