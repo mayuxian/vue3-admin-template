@@ -2,13 +2,20 @@
     <div :key="props.slotKey" class="infoitem-box" v-bind="$attrs">
         <div class="infoitem-label" :style="`width:${props.labelWidth};${props.labelStyle}`">{{ label }}
         </div>
-        <slot v-if="$slots.default" :style="`min-width:${props.textWidth}`"></slot>
-        <slot v-else-if="$slots[props.slotKey]" :name="props.slotKey" :style="`min-width:${props.textWidth}`"></slot>
-        <template v-else>
-            <div :class="`infoitem-text ${props.textClass}`" :style="`min-width:${props.textWidth};${props.textStyle}`">
+        <div :class="`infoitem-text ${props.textClass}`" :style="`min-width:${props.textWidth};${props.textStyle}`">
+            <slot v-if="$slots.default" :style="`min-width:${props.textWidth}`"></slot>
+            <slot v-else-if="$slots[props.slotKey]" :name="props.slotKey" :style="`min-width:${props.textWidth}`">
+            </slot>
+            <template v-else>
                 {{ text }}
+            </template>
+            <!-- <div style="width: 100%;text-align: right;">
+                <slot name="suffix" style="text-align: right;"></slot>
+            </div> -->
+            <div style="float: right;margin-right: 10px;">
+                <slot name="in-suffix"></slot>
             </div>
-        </template>
+        </div>
         <slot name="suffix"></slot>
     </div>
 </template>
