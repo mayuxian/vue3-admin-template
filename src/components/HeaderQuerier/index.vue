@@ -2,7 +2,7 @@
   <div>
     <multi-filter
       ref="multiFilter"
-      v-model="$filterParams"
+      v-model="__filterParams"
       :field-options="fieldOptions"
       :list-options="listOptions"
       :label-visible="true"
@@ -53,16 +53,16 @@ export default {
   emits: ['update:modelValue', 'query'],
   data() {
     return {
-      $filterParams: {},
+      __filterParams: {},
       multiFilterFields: null,
       filterlistOptions: null,
     }
   },
   watch: {
-    $filterParams: {
+    __filterParams: {
       deep: true,
       handler(newVal, oldVal) {
-        console.log('watch $filterParams ', newVal)
+        console.log('watch __filterParams ', newVal)
         if (newVal != oldVal) {
           this.$emit('update:modelValue', newVal)
         }
@@ -71,9 +71,9 @@ export default {
   },
   methods: {
     onQuery() {
-      console.log('onQuery $filterParams ', this.$filterParams)
+      console.log('onQuery __filterParams ', this.__filterParams)
       let params = {
-        ...(this.$filterParams || {}),
+        ...(this.__filterParams || {}),
         // size: 10,
         // current: 1,
       }
