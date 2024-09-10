@@ -3,7 +3,7 @@
   // "editor.wordWrap": "wordWrapColumn",
   "editor.formatOnSave": true, //true 保存时格式化
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": false //true 保存时自动修复
+    "source.fixAll.eslint": "never"
   },
   "eslint.format.enable": true,
   "eslint.validate": [

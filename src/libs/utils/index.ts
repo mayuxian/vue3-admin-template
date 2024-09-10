@@ -25,3 +25,18 @@ export function trycatchAsyncHandling(fn: any, ...args: any) {
   }
   return res
 }
+
+export function downloadFile(url: string, fileName: string) {
+  if (!url) return
+  const a = document.createElement('a')
+  a.href = url
+  a.target = '_blank'
+  if (fileName) {
+    a.download = fileName
+  }
+  document.body.appendChild(a)
+  setTimeout(() => {
+    a.click()
+    document.body.removeChild(a)
+  }, 360)
+}

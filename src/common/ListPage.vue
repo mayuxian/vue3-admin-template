@@ -142,6 +142,8 @@ async function init() {
       throw new Error('请配置request请求参数')
     }
     tableLoading.value = true
+    data.filterParams.pageNo = pager.current
+    data.filterParams.pageSize = pager.size
     const resData = await props.request(data.filterParams, init)
     data.tableData = resData?.list || []
     pager.total = resData?.total
@@ -195,6 +197,7 @@ function onSkipPage(pageNo = 1) {
   if (pager.current === pageNo) return
   pager.current = pageNo
   data.filterParams.pageNo = pageNo
+  data.filterParams.pageSize = pager.size
   init()
 }
 function onSkipSize(size = 10) {
